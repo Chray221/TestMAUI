@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:view="clr-namespace:TestMAUI.Views"
+             xmlns:viewmodel="clr-namespace:TestMAUI.ViewModels"
+             xmlns:model="clr-namespace:TestMAUI.Models"
+             x:Class="TestMAUI.Views.MineSwepperPage"
+             x:DataType="viewmodel:MineSweeperViewModel"           
+             x:Name="mineSweeperPage"
+             Title="MineSwepper">
+    <VerticalStackLayout>
+        <StackLayout Orientation="Horizontal" Spacing="5" Padding="0,0,25,0">
+            <Button HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    ImageSource="{FontImage Glyph={StaticResource FlagIconText}, FontFamily=FontAwesomeSolid, Color=Red}"
+                    BackgroundColor="Gray"
+                    CornerRadius="5"
+                    Padding="25,15"
+                    FontAttributes="Bold"
+                    TextColor="Black"
+                    FontSize="25"
+                    Command="{Binding SetFlaggingCommand}">
+                <Button.Text>
+                    <MultiBinding StringFormat="{}{0}/{1}">
+                        <MultiBinding.Bindings>
+                            <Binding Path="TileFlaggedCount"/>
+                            <Binding Path="Tiles.TotalBombs"/>
+                        </MultiBinding.Bindings>
+                    </MultiBinding>
+                </Button.Text>
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding IsFlagging}"
+                                 Value="true">
+                        <Setter Property="BackgroundColor" Value="Green"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+            <ImageButton HorizontalOptions="StartAndExpand"
+                         Source="{FontImage Glyph={StaticResource RefreshIconText}, FontFamily=FontAwesomeSolid, Color=Blue}"
+                         BackgroundColor="Gray"
+                         CornerRadius="5"
+                         Padding="15"
+                         Command="{Binding ReGenerateCommand}">
+            </ImageButton>
+            
+            <Button IsEnabled="False"
+                    VerticalOptions="Center"
+                    HorizontalOptions="EndAndExpand"
+                    BackgroundColor="Gray"
+                    CornerRadius="5"
+                    Padding="25,10"
+                    FontAttributes="Bold"
+                    TextColor="Black"
+                    FontSize="35">
+                <Button.Text>
+                    <MultiBinding StringFormat="{}{0}/{1}">
+                        <MultiBinding.Bindings>
+                            <Binding Path="Tiles.NumberOfOpenedTile"/>
+                            <Binding Path="Tiles.TotalTiles"/>
+                        </MultiBinding.Bindings>
+                    </MultiBinding>
+                </Button.Text>
+                <!--
+                    Text="{Binding Tiles.NumberOfOpenedTile}"-->
+            </Button>
+        </StackLayout>
+        <Grid RowSpacing="2"
+              ColumnSpacing="2"
+              ColumnDefinitions="{Binding ColumnDefinations}"
+              RowDefinitions="{Binding RowDefinitions}"
+              BindableLayout.ItemsSource="{Binding Tiles}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="model:MineSweeperTile">
+                    <Button Grid.Row="{Binding Row}"
+                            Grid.Column="{Binding Column}"
+                            BackgroundColor="{StaticResource Gray400}"
+                            Text="{Binding BombInAreaCount}"
+                            TextColor="Transparent"
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MineSweeperViewModel}}, Path=ClickTileCommand}"
+                            CommandParameter="{Binding .}" 
+                            FontAttributes="Bold"
+                            FontSize="25">
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="Default">
+                                <Setter Property="Text" Value="{x:Null}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="IsFlagged">                                
+                                <Setter Property="Text" Value="flag"/>
+                                <Setter Property="FontFamily" Value="FontAwesomeSolid"/>
+                                <Setter Property="TextColor" Value="Red"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="IsOpen">                                    
+                                <Setter Property="Text" Value="{Binding BombInAreaCount}"/>            
+                                <Setter Property="BackgroundColor" Value="{StaticResource Gray600}"/>
+                                <Setter Property="TextColor" Value="{StaticResource White}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="IsOpenEmpty">  
+                                <Setter Property="Text" Value="{x:Null}"/>
+                                <Setter Property="BackgroundColor" Value="{StaticResource Gray600}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="IsBomb">  
+                                <Setter Property="Text" Value="{x:Null}"/>
+                                <Setter Property="BackgroundColor" Value="Red"/>
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </Grid>
+    </VerticalStackLayout>
+</view:BaseContentPage>

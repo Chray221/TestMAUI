@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <!--<FontImageSource x:Key="FlagImageSource" Glyph="&#xf30c;"
+                     FontFamily="{OnPlatform iOS=Ionicons, Android=ionicons.ttf#}"
+                     Size="44" />-->
+    <!--FONTS
+        "OpenSansRegular");
+		"OpenSansSemibold");
+		"FontAwesomeSolid");
+        "FontAwesomeBrands");
+        "FontAwesomeRegular");-->
+    <x:String x:Key="RefreshIconText">rotate</x:String>
+    <x:String x:Key="FlagIconText">flag</x:String>
+    <FontImageSource x:Key="FlagIcon" Glyph="flag"
+                     FontFamily="FontAwesomeSolid"
+                     Size="44" />
+    <FontImageSource x:Key="CheckIcon" Glyph="check"
+                     FontFamily="FontAwesomeSolid"
+                     Size="44" />
+    
+</ResourceDictionary>

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:view="clr-namespace:TestMAUI.Views"
+             xmlns:viewmodel="clr-namespace:TestMAUI.ViewModels"
+             x:Class="TestMAUI.Views.MainPage"
+             x:DataType="viewmodel:MainViewModel">
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Start">
+
+            <Image
+                Source="dotnet_bot.png"
+                SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                HeightRequest="200"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="Hello, World!"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="32"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="Welcome to .NET Multi-platform App UI"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
+                FontSize="18"
+                HorizontalOptions="Center" />
+            <Button
+                x:Name="CounterBtn"
+                Text="{Binding CountText}"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Command="{Binding CounterClickedCommand}"
+                HorizontalOptions="Center" />
+            <CollectionView ItemsSource="{Binding MineSweepers}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                            <Button Margin="0,15,0,0"
+                                Text="{Binding ., StringFormat='To MineSweeper {0}'}"
+                                HorizontalOptions="Center"
+                                SemanticProperties.Hint="{Binding ., StringFormat='To MineSweeper {0}'}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=ToMineSweeperCommand}"
+                                CommandParameter="{Binding .}"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</view:BaseContentPage>
+
