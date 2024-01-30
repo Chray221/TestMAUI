@@ -1,13 +1,9 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core.Primitives;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using TestMAUI.Helpers;
 using TestMAUI.Models;
 using TestMAUI.Services.Interfaces;
-using static Android.App.DownloadManager;
-using static Android.InputMethodServices.Keyboard;
 
 namespace TestMAUI.ViewModels
 {
@@ -34,11 +30,16 @@ namespace TestMAUI.ViewModels
             
         }
 
-        public void OnPageLoaded()
+        public override void OnNavigatedTo()
         {
+            PageLog();
             Tiles = new MineSweeper(RowNum, ColNum, (RowNum + ColNum) / 2);
             Generate();
+            base.OnNavigatedTo();
+        }
 
+        public void OnPageLoaded()
+        {
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)

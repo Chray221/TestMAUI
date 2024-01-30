@@ -1,14 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using Android.Service.QuickSettings;
+﻿using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace TestMAUI.Models;
 
-public partial class MineSweeperTile : ObservableObject
+public partial class MineSweeperTile : BaseTile
 {
-    public int Row { get; set; }
-    public int Column { get; set; }
     public bool IsBomb { get; set; }
     //public bool IsShowFlag { get; set; }
     //public int BombInAreaCount { get; set; }
@@ -51,14 +47,12 @@ public partial class MineSweeperTile : ObservableObject
         }
     }
 
-    public MineSweeperTile()
+    public MineSweeperTile() : base(0,0)
 	{
     }
 
-    public MineSweeperTile(int row, int column)
+    public MineSweeperTile(int row, int column) : base(row, column)
     {
-        Row = row;
-        Column = column;
     }
 
     public void Clear()
@@ -68,28 +62,6 @@ public partial class MineSweeperTile : ObservableObject
         IsOpen = false;
         BombInAreaCount = 0;
     }
-
-    public bool IsAroundTile(int row, int col)
-    {
-        return (Row == row-1 && Column == col-1) || //tl
-               (Row == row-1 && Column == col) || // t-top
-               (Row == row-1 && Column == col+1) || // tr
-               (Row == row   && Column == col+1) || // r-right
-               (Row == row+1 && Column == col+1) || // br
-               (Row == row+1 && Column == col) || // b-bottom
-               (Row == row+1 && Column == col-1) || // bl
-               (Row == row && Column == col-1) // l-left
-               ;
-    }
-
-    public (int Row, int Column) GetTopLeftTile()     => (Row - 1, Column - 1);
-    public (int Row, int Column) GetTopTile()         => (Row - 1, Column);
-    public (int Row, int Column) GetTopRightTile()    => (Row - 1, Column + 1);
-    public (int Row, int Column) GetRightTile()       => (Row    , Column + 1);
-    public (int Row, int Column) GetBottomRightTile() => (Row + 1, Column + 1);
-    public (int Row, int Column) GetBottomTile()      => (Row + 1, Column);
-    public (int Row, int Column) GetBottomLeftTile()  => (Row + 1, Column - 1);
-    public (int Row, int Column) GetLeftTile()        => (Row, Column - 1);
 
     public static MineSweeperTile CreateBomb(int row, int column)
     {

@@ -67,12 +67,55 @@
         </StackLayout>
         <Grid RowSpacing="2"
               ColumnSpacing="2"
+              BackgroundColor="{StaticResource Gray100}"
               ColumnDefinitions="{Binding ColumnDefinations}"
               RowDefinitions="{Binding RowDefinitions}"
               BindableLayout.ItemsSource="{Binding Tiles}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate x:DataType="model:MineSweeperTile">
-                    <Button Grid.Row="{Binding Row}"
+                    <Label Grid.Row="{Binding Row}"
+                            Grid.Column="{Binding Column}"
+                            BackgroundColor="{StaticResource Gray400}"
+                            Text="{Binding BombInAreaCount}"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+                            TextColor="Transparent"
+                            FontAttributes="Bold"
+                            FontSize="25">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer
+                                NumberOfTapsRequired="1"                                                  
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MineSweeperViewModel}}, Path=ClickTileCommand}"
+                                CommandParameter="{Binding .}" />
+                        </Label.GestureRecognizers>
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding BombInAreaCount}" Value="0">
+                                <Setter Property="Text" Value="{x:Null}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Default">
+                                <Setter Property="Text" Value="{x:Null}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="IsFlagged">                                
+                                <Setter Property="Text" Value="flag"/>
+                                <Setter Property="FontFamily" Value="FontAwesomeSolid"/>
+                                <Setter Property="TextColor" Value="Red"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="IsOpen">                                    
+                                <Setter Property="Text" Value="{Binding BombInAreaCount}"/>            
+                                <Setter Property="BackgroundColor" Value="{StaticResource Gray600}"/>
+                                <Setter Property="TextColor" Value="{StaticResource White}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="IsOpenEmpty">  
+                                <Setter Property="Text" Value="{x:Null}"/>
+                                <Setter Property="BackgroundColor" Value="{StaticResource Gray600}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="IsBomb">  
+                                <Setter Property="Text" Value="{x:Null}"/>
+                                <Setter Property="BackgroundColor" Value="Red"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <!--<Button Grid.Row="{Binding Row}"
                             Grid.Column="{Binding Column}"
                             BackgroundColor="{StaticResource Gray400}"
                             Text="{Binding BombInAreaCount}"
@@ -104,7 +147,7 @@
                                 <Setter Property="BackgroundColor" Value="Red"/>
                             </DataTrigger>
                         </Button.Triggers>
-                    </Button>
+                    </Button>-->
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </Grid>
