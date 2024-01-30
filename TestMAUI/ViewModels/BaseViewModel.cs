@@ -59,29 +59,31 @@ namespace TestMAUI.ViewModels
         #endregion
 
         #region LifeCycle
+        internal void PageLog([CallerMemberName] string memberName = "")
+            => Log("PAGE_LOG: ", memberName);
         public virtual void OnNavigatingTo()
         {
-
+            PageLog();
         }
 
         public virtual void OnNavigatedTo()
         {
-
+            PageLog();
         }
 
         public virtual void OnNavigatingFrom()
         {
-
+            PageLog();
         }
 
         public virtual void OnNavigatedFrom()
         {
-
+            PageLog();
         }
 
         public virtual void OnDisappearing()
         {
-
+            PageLog();
         }
         #endregion
 

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:view="clr-namespace:TestMAUI.Views"
+             xmlns:model="clr-namespace:TestMAUI.Models"
+             xmlns:viewmodel="clr-namespace:TestMAUI.ViewModels"
+             x:Class="TestMAUI.Views.TicTacToePage"
+             x:DataType="viewmodel:TicTacToeViewModel"
+             Title="TicTacToe">
+    <VerticalStackLayout>
+        <StackLayout Orientation="Horizontal" Spacing="5" Padding="0,0,25,0">
+            <ImageButton HorizontalOptions="StartAndExpand"
+                         Source="{FontImage Glyph={StaticResource RefreshIconText}, FontFamily=FontAwesomeSolid, Color=Blue}"
+                         BackgroundColor="Gray"
+                         CornerRadius="5"
+                         Padding="15"
+                         Command="{Binding ReGenerateCommand}">
+            </ImageButton>
+            
+            <Label IsEnabled="False"
+                   Text="{Binding TurnMessage}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="EndAndExpand"
+                   BackgroundColor="Gray"
+                   Padding="25,10"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   FontSize="35"/>
+        </StackLayout>
+        <Grid RowSpacing="2"
+              ColumnSpacing="2"
+              VerticalOptions="Center"
+              HorizontalOptions="Center"
+              ColumnDefinitions="{Binding ColumnDefinations}"
+              RowDefinitions="{Binding RowDefinitions}"
+              BindableLayout.ItemsSource="{Binding Board}"
+              Margin="0,15,0,0">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="model:TicTacToeTile">
+                    <Label Grid.Row="{Binding Row}"
+                            Grid.Column="{Binding Column}"
+                            BackgroundColor="{StaticResource Gray400}"
+                            Text="{Binding Value}"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            FontSize="50">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer
+                                NumberOfTapsRequired="1"                                                  
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TicTacToeViewModel}}, Path=ClickTileCommand}"
+                                CommandParameter="{Binding .}" />
+                        </Label.GestureRecognizers>
+                        <Label.Triggers>
+                        </Label.Triggers>
+                    </Label>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </Grid>
+    </VerticalStackLayout>
+</view:BaseContentPage>

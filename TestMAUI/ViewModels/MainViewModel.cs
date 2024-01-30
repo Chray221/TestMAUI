@@ -10,6 +10,7 @@ namespace TestMAUI.ViewModels
     {
         int count = 0;
 
+        [ObservableProperty] private bool mineSweeperExpanded = false;
         [ObservableProperty] private string countText = "Click me";
         [ObservableProperty] private List<string> mineSweepers = new List<string>()
         {
@@ -17,6 +18,8 @@ namespace TestMAUI.ViewModels
             "6x6",
             "8x8",
             "10x10",
+            "13x10",
+            "15x10",
             "20x10",
             "30x10",
             "40x10"
@@ -51,6 +54,18 @@ namespace TestMAUI.ViewModels
                 new KeyValuePair<string, object>(nameof(MineSweeperViewModel.RowNum), rowNum),
                 new KeyValuePair<string, object>(nameof(MineSweeperViewModel.ColNum), colNum));
             
+        }
+
+        [RelayCommand]
+        public async Task ToTicTacToe()
+        {
+            await NavigateToAsync<TicTacToePage>();
+        }
+
+        [RelayCommand]
+        public void ExpandMineSweeper()
+        {
+            MineSweeperExpanded = !MineSweeperExpanded;
         }
     }
 }

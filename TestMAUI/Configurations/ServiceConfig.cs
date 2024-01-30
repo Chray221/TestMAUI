@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using CommunityToolkit.Maui;
 using TestMAUI.ViewModels;
 using TestMAUI.Views;
@@ -15,8 +16,9 @@ namespace TestMAUI.Configurations
 
             //pages
             //services.AddTransient<MainPage>();
-            services.AddTransientWithShellRoute<MainPage, MainViewModel>(nameof(MainPage));
-            services.AddTransientWithShellRoute<MineSwepperPage, MineSweeperViewModel>(nameof(MineSwepperPage));
+            services.AddTransientShell<MainPage, MainViewModel>();
+            services.AddTransientShell<MineSwepperPage, MineSweeperViewModel>();
+            services.AddTransientShell<TicTacToePage, TicTacToeViewModel>();
 
             return services;
         }
@@ -36,6 +38,14 @@ namespace TestMAUI.Configurations
 
         public static IServiceCollection RegisterRoutes(this IServiceCollection services)
 		{
+            return services;
+        }
+
+        public static IServiceCollection AddTransientShell<TPage,TViewModel>(this IServiceCollection services)
+            where TPage : NavigableElement
+            where TViewModel : class, INotifyPropertyChanged
+        {
+            services.AddTransientWithShellRoute<TPage, TViewModel>(typeof(TPage).Name);
             return services;
         }
 

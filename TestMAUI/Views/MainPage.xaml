@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:view="clr-namespace:TestMAUI.Views"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:TestMAUI.ViewModels"
              x:Class="TestMAUI.Views.MainPage"
              x:DataType="viewmodel:MainViewModel">
@@ -36,11 +37,22 @@
                 SemanticProperties.Hint="Counts the number of times you click"
                 Command="{Binding CounterClickedCommand}"
                 HorizontalOptions="Center" />
-            <CollectionView ItemsSource="{Binding MineSweepers}"
+            <toolkit:Expander IsExpanded="{Binding MineSweeperExpanded}" >
+                <toolkit:Expander.Header>
+                    <Button Margin="0,0,0,15"
+                           Text="MineSweeper"
+                           HorizontalOptions="Center"
+                           SemanticProperties.Hint="{Binding ., StringFormat='To MineSweeper {0}'}"
+                           Command="{Binding ExpandMineSweeperCommand}"/>
+                </toolkit:Expander.Header>
+                <CollectionView ItemsSource="{Binding MineSweepers}"
                             SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="8"/>
+                    </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                            <Button Margin="0,15,0,0"
+                            <Button
                                 Text="{Binding ., StringFormat='To MineSweeper {0}'}"
                                 HorizontalOptions="Center"
                                 SemanticProperties.Hint="{Binding ., StringFormat='To MineSweeper {0}'}"
@@ -49,6 +61,14 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            </toolkit:Expander>
+            
+            <Button Margin="0,15,0,0"
+                Text="To TicTacToe"
+                HorizontalOptions="Center"
+                SemanticProperties.Hint="{Binding ., StringFormat='To TicTacToe'}"
+                Command="{Binding ToTicTacToeCommand}"
+                CommandParameter="{Binding .}"/>
 
         </VerticalStackLayout>
     </ScrollView>
