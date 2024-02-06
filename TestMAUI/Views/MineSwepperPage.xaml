@@ -5,7 +5,7 @@
              xmlns:viewmodel="clr-namespace:TestMAUI.ViewModels"
              xmlns:model="clr-namespace:TestMAUI.Models"
              x:Class="TestMAUI.Views.MineSwepperPage"
-             x:DataType="viewmodel:MineSweeperViewModel"           
+             x:DataType="viewmodel:MineSweeperViewModel"
              x:Name="mineSweeperPage"
              Title="MineSwepper">
     <VerticalStackLayout>
@@ -70,18 +70,20 @@
               BackgroundColor="{StaticResource Gray100}"
               ColumnDefinitions="{Binding ColumnDefinations}"
               RowDefinitions="{Binding RowDefinitions}"
-              BindableLayout.ItemsSource="{Binding Tiles}">
+              BindableLayout.ItemsSource="{Binding Tiles}"
+              VerticalOptions="Fill">
             <BindableLayout.ItemTemplate>
                 <DataTemplate x:DataType="model:MineSweeperTile">
                     <Label Grid.Row="{Binding Row}"
                             Grid.Column="{Binding Column}"
                             BackgroundColor="{StaticResource Gray400}"
-                            Text="{Binding BombInAreaCount}"
+                            Text="{Binding Value}"
                             HorizontalTextAlignment="Center"
                             VerticalTextAlignment="Center"
-                            TextColor="Transparent"
+                            TextColor="{OnPlatform Default=Transparent, iOS=Black}"
                             FontAttributes="Bold"
-                            FontSize="25">
+                            FontSize="25"
+                            HeightRequest="60">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer
                                 NumberOfTapsRequired="1"                                                  
@@ -89,65 +91,32 @@
                                 CommandParameter="{Binding .}" />
                         </Label.GestureRecognizers>
                         <Label.Triggers>
-                            <DataTrigger TargetType="Label" Binding="{Binding BombInAreaCount}" Value="0">
+                            <!--<DataTrigger TargetType="Label" Binding="{Binding BombInAreaCount}" Value="0">
                                 <Setter Property="Text" Value="{x:Null}"/>
                             </DataTrigger>
                             <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Default">
                                 <Setter Property="Text" Value="{x:Null}"/>
-                            </DataTrigger>
+                            </DataTrigger>-->
                             <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="IsFlagged">                                
-                                <Setter Property="Text" Value="flag"/>
+                                <!--<Setter Property="Text" Value="flag"/>-->
                                 <Setter Property="FontFamily" Value="FontAwesomeSolid"/>
                                 <Setter Property="TextColor" Value="Red"/>
                             </DataTrigger>
                             <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="IsOpen">                                    
-                                <Setter Property="Text" Value="{Binding BombInAreaCount}"/>            
+                                <!--<Setter Property="Text" Value="{Binding BombInAreaCount}"/>-->            
                                 <Setter Property="BackgroundColor" Value="{StaticResource Gray600}"/>
                                 <Setter Property="TextColor" Value="{StaticResource White}"/>
                             </DataTrigger>
                             <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="IsOpenEmpty">  
-                                <Setter Property="Text" Value="{x:Null}"/>
+                                <!--<Setter Property="Text" Value="{x:Null}"/>-->
                                 <Setter Property="BackgroundColor" Value="{StaticResource Gray600}"/>
                             </DataTrigger>
                             <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="IsBomb">  
-                                <Setter Property="Text" Value="{x:Null}"/>
+                                <!--<Setter Property="Text" Value="{x:Null}"/>-->
                                 <Setter Property="BackgroundColor" Value="Red"/>
                             </DataTrigger>
                         </Label.Triggers>
                     </Label>
-                    <!--<Button Grid.Row="{Binding Row}"
-                            Grid.Column="{Binding Column}"
-                            BackgroundColor="{StaticResource Gray400}"
-                            Text="{Binding BombInAreaCount}"
-                            TextColor="Transparent"
-                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MineSweeperViewModel}}, Path=ClickTileCommand}"
-                            CommandParameter="{Binding .}" 
-                            FontAttributes="Bold"
-                            FontSize="25">
-                        <Button.Triggers>
-                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="Default">
-                                <Setter Property="Text" Value="{x:Null}"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="IsFlagged">                                
-                                <Setter Property="Text" Value="flag"/>
-                                <Setter Property="FontFamily" Value="FontAwesomeSolid"/>
-                                <Setter Property="TextColor" Value="Red"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="IsOpen">                                    
-                                <Setter Property="Text" Value="{Binding BombInAreaCount}"/>            
-                                <Setter Property="BackgroundColor" Value="{StaticResource Gray600}"/>
-                                <Setter Property="TextColor" Value="{StaticResource White}"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="IsOpenEmpty">  
-                                <Setter Property="Text" Value="{x:Null}"/>
-                                <Setter Property="BackgroundColor" Value="{StaticResource Gray600}"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="IsBomb">  
-                                <Setter Property="Text" Value="{x:Null}"/>
-                                <Setter Property="BackgroundColor" Value="Red"/>
-                            </DataTrigger>
-                        </Button.Triggers>
-                    </Button>-->
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </Grid>

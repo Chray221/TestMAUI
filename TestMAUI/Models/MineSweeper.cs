@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
-using CommunityToolkit.Mvvm.ComponentModel;
 using TestMAUI.Helpers;
 
 namespace TestMAUI.Models
 {
-	public class MineSweeper : ObservableCollection<MineSweeperTile>
+    public class MineSweeper : ReadOnlyObservableCollection<MineSweeperTile>
     {
         private GameStatus _gameStatus;
         private int _numberOfOpenedTile;
@@ -30,35 +27,36 @@ namespace TestMAUI.Models
             private set { SetProperty(ref _gameStatus, value); }
         }
 
-        public MineSweeper(): base()
+        public MineSweeper(): base(GenerateTiles())
 		{
             TotalRows = 10;
             TotalColumns = 10;
             TotalBombs = 10;
-
         }
 
-        public MineSweeper(int numberOfRow = 10, int numberOfCol = 10, int numberOfBomb = 10) : base()
+        public MineSweeper(int numberOfRow = 10, int numberOfCol = 10, int numberOfBomb = 10) : base(GenerateTiles(numberOfRow, numberOfCol))
         {
             TotalRows = numberOfRow;
             TotalColumns = numberOfCol;
             TotalBombs = numberOfBomb;
-            //Generate();
         }
 
-        public void Generate()
+        private static ObservableCollection<MineSweeperTile> GenerateTiles(
+            int numberOfRow = 10,
+            int numberOfCol = 10)
         {
-            for (int tileRow = 0; tileRow < TotalRows; tileRow++)
+            var temp = new ObservableCollection<MineSweeperTile>();
+            for (int tileRow = 0; tileRow < numberOfRow; tileRow++)
             {
-                for (int tileCol = 0; tileCol < TotalColumns; tileCol++)
+                for (int tileCol = 0; tileCol < numberOfCol; tileCol++)
                 {
-                    Add(new MineSweeperTile(tileRow, tileCol));
+                    temp.Add( new MineSweeperTile(tileRow, tileCol));
                 }
             }
-            GenerateBombs();
+            return temp;
         }
 
-        public void ReGenerate()
+        public void Start()
         {
             foreach (var tile in this)
             {
@@ -93,7 +91,7 @@ namespace TestMAUI.Models
                         aroundBombTile.BombInAreaCount = 0;
                     }
                     else
-                    { 
+                    {
                         aroundBombTile.BombInAreaCount++;
                     }
                 }
@@ -178,7 +176,7 @@ namespace TestMAUI.Models
 
         protected virtual void SetProperty<T>(ref T oldValue, T newValue, [CallerMemberName] string propertyName = "")
         {
-            if (oldValue == null ? true : !oldValue.Equals(newValue))
+            if (oldValue == null || !oldValue.Equals(newValue))
             {
                 oldValue = newValue;
                 OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(propertyName));

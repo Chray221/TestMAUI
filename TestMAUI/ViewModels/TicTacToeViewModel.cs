@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls;
 using TestMAUI.Models;
+using TestMAUI.Models.EventHandlers;
 
 namespace TestMAUI.ViewModels
 {
@@ -30,14 +31,18 @@ namespace TestMAUI.ViewModels
                 //ColumnDefinations.Add(new ColumnDefinition(GridLength.Star));
                 ColumnDefinations.Add(new ColumnDefinition(size));
             }
+
+            Board = board ?? new TicTacToe();
+            Board.Start();
+            SetTurnMessage();
         }
 
         public override void OnNavigatedTo()
         {
             base.OnNavigatedTo();
-            Board = board ?? new TicTacToe();
-            Board.Start();
-            SetTurnMessage();
+            //Board = board ?? new TicTacToe();
+            //Board.Start();
+            //SetTurnMessage();
         }
 
         [RelayCommand]
@@ -83,6 +88,13 @@ namespace TestMAUI.ViewModels
             MainThread.BeginInvokeOnMainThread(Board.Start);
             IsEnded = false;
             SetTurnMessage();
+        }
+
+        [RelayCommand]
+        public void TileSelected(TicTacToeTileClickedEventArg arg)
+        {
+            TurnMessage = $"Turn of {arg.Turn}";
+            //SetTurnMessage();
         }
 
         private void SetTurnMessage()

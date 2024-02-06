@@ -78,6 +78,7 @@
 	  <None Remove="Resources\Fonts\Font Awesome 6 Free-Solid-900.otf" />
 	  <None Remove="CustomViews\" />
 	  <None Remove="Enums\" />
+	  <None Remove="Models\EventHandlers\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
@@ -89,5 +90,6 @@
 	  <Folder Include="Services\Interfaces\" />
 	  <Folder Include="CustomViews\" />
 	  <Folder Include="Enums\" />
+	  <Folder Include="Models\EventHandlers\" />
 	</ItemGroup>
 </Project>

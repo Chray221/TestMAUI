@@ -27,14 +27,13 @@ namespace TestMAUI.ViewModels
         public MineSweeperViewModel(ILogger<MineSweeperViewModel> logger)
             : base(logger)
         {
-            
         }
 
         public override void OnNavigatedTo()
         {
             PageLog();
-            Tiles = new MineSweeper(RowNum, ColNum, (RowNum + ColNum) / 2);
-            Generate();
+            //Tiles = Tiles ?? new MineSweeper(RowNum, ColNum, (RowNum + ColNum) / 2);
+            //Start();
             base.OnNavigatedTo();
         }
 
@@ -46,19 +45,19 @@ namespace TestMAUI.ViewModels
         {
             query.TryGetRefValue(nameof(RowNum), ref rowNum);
             query.TryGetRefValue(nameof(ColNum), ref colNum);
+
+            Tiles = Tiles ?? new MineSweeper(RowNum, ColNum, (RowNum + ColNum) / 2);
+            Start();
         }
 
         public override void OnNavigatingTo()
         {
             base.OnNavigatingTo();
-            //Tiles = new MineSweeper(RowNum, ColNum, (RowNum + ColNum) / 2);
-            //Generate();
         }
 
-        private void Generate()
+        private void Start()
         {
-            Tiles.Clear();
-            Tiles.Generate();
+            Tiles.Start();
             for (int rowDef = 0; rowDef < Tiles.TotalRows; rowDef++)
             {
                 RowDefinitions.Add(new RowDefinition(GridLength.Star));
@@ -72,7 +71,7 @@ namespace TestMAUI.ViewModels
         [RelayCommand]
         public void ReGenerate()
         {
-            MainThread.BeginInvokeOnMainThread(Tiles.ReGenerate);
+            MainThread.BeginInvokeOnMainThread(Tiles.Start);
             IsEnded = false;
         }
 

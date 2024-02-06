@@ -9,14 +9,30 @@ public partial class MineSweeperTile : BaseTile
     //public bool IsShowFlag { get; set; }
     //public int BombInAreaCount { get; set; }
 
-    //[ObservableProperty]
-    //private bool isBomb;
-    [ObservableProperty]
-    private bool isFlagged;
-    [ObservableProperty]
-    private bool isOpen;
-    [ObservableProperty]
-    public int bombInAreaCount;
+    //[ObservableProperty] private bool isBomb;
+    [ObservableProperty] private bool isFlagged;
+    [ObservableProperty] private bool isOpen;
+    [ObservableProperty] private int bombInAreaCount;
+
+    public string Value
+    {
+        get
+        {
+            //return BombInAreaCount == 0 || !IsOpen ? "" : $"{BombInAreaCount}";
+            return Status switch
+            {
+                //case TileStatus.Default:
+                //case TileStatus.IsBomb:
+                //case TileStatus.IsOpenEmpty:
+                //    return " ";
+                TileStatus.IsFlagged => "flag",
+                TileStatus.IsOpen => $"{BombInAreaCount}",
+                _ => " " /* $"{BombInAreaCount}" */
+            };
+        }
+    }
+
+
 
     public TileStatus Status
     {
@@ -44,6 +60,15 @@ public partial class MineSweeperTile : BaseTile
         if(!e.PropertyName.Equals(nameof(Status)))
         {
             OnPropertyChanged(nameof(Status));
+            //OnPropertyChanged(nameof(Value));
+        }
+
+        switch (e.PropertyName)
+        {
+            case nameof(IsOpen):
+            case nameof(IsFlagged):
+                OnPropertyChanged(nameof(Value));
+                break;
         }
     }
 

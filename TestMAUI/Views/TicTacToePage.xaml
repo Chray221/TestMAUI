@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:view="clr-namespace:TestMAUI.Views"
              xmlns:model="clr-namespace:TestMAUI.Models"
+             xmlns:cv="clr-namespace:TestMAUI.CustomViews"
              xmlns:viewmodel="clr-namespace:TestMAUI.ViewModels"
              x:Class="TestMAUI.Views.TicTacToePage"
              x:DataType="viewmodel:TicTacToeViewModel"
