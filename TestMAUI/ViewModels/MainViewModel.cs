@@ -63,6 +63,12 @@ namespace TestMAUI.ViewModels
         }
 
         [RelayCommand]
+        public async Task ToSwipeMerge()
+        {
+            await NavigateToAsync<SwipeMergePage>();
+        }
+
+        [RelayCommand]
         public void ExpandMineSweeper()
         {
             MineSweeperExpanded = !MineSweeperExpanded;

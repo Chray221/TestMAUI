@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:TestMAUI.Models"
+             xmlns:view="clr-namespace:TestMAUI.Views"
+             xmlns:viewmodel="clr-namespace:TestMAUI.ViewModels"
+             x:Class="TestMAUI.Views.SwipeMergePage"
+             x:DataType="viewmodel:SwipeMergeViewModel"
+             Title="SwipeMergePage">
+    <VerticalStackLayout>
+        <VerticalStackLayout.GestureRecognizers>
+            <SwipeGestureRecognizer Direction="Left"  Command="{Binding SwipeLeftCommand}"/>
+            <SwipeGestureRecognizer Direction="Right" Command="{Binding SwipeRightCommand}"/>
+            <SwipeGestureRecognizer Direction="Up"    Command="{Binding SwipeUpCommand}"/>
+            <SwipeGestureRecognizer Direction="Down"  Command="{Binding SwipeDownCommand}"/>
+        </VerticalStackLayout.GestureRecognizers>
+        <StackLayout Orientation="Horizontal" Spacing="5" Padding="0,0,25,0">
+            <ImageButton HorizontalOptions="StartAndExpand"
+                         Source="{FontImage Glyph={StaticResource RefreshIconText}, FontFamily=FontAwesomeSolid, Color=Blue}"
+                         BackgroundColor="Gray"
+                         CornerRadius="5"
+                         Padding="15"
+                         Command="{Binding ReGenerateCommand}">
+            </ImageButton>
+            <Label IsEnabled="False"
+                   Text="{Binding Message}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="EndAndExpand"
+                   BackgroundColor="Gray"
+                   Padding="5"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   FontSize="35"/>
+        </StackLayout>
+        <Grid RowSpacing="2"
+              ColumnSpacing="2"
+              VerticalOptions="Center"
+              HorizontalOptions="Center"
+              ColumnDefinitions="90,90,90,90"
+              RowDefinitions="90,90,90,90"
+              BindableLayout.ItemsSource="{Binding Board}"
+              Margin="0,15,0,0">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="model:SwipeMergeTile">
+                    <Label Grid.Row="{Binding Row}"
+                            Grid.Column="{Binding Column}"
+                            BackgroundColor="{StaticResource Gray400}"
+                            Text="{Binding ValueText}"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            FontSize="50">                        
+                    </Label>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </Grid>
+    </VerticalStackLayout>
+</view:BaseContentPage>

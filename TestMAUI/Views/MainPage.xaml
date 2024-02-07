@@ -69,6 +69,13 @@
                 SemanticProperties.Hint="{Binding ., StringFormat='To TicTacToe'}"
                 Command="{Binding ToTicTacToeCommand}"
                 CommandParameter="{Binding .}"/>
+            
+            <Button Margin="0,15,0,0"
+                Text="To 2048"
+                HorizontalOptions="Center"
+                SemanticProperties.Hint="{Binding ., StringFormat='To 2048'}"
+                Command="{Binding ToSwipeMergeCommand}"
+                CommandParameter="{Binding .}"/>
 
         </VerticalStackLayout>
     </ScrollView>
