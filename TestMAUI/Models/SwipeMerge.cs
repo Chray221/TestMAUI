@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+using TestMAUI.Helpers;
 
 namespace TestMAUI.Models;
 
@@ -20,14 +21,6 @@ public class SwipeMerge : ReadOnlyObservableCollection<SwipeMergeTile>
 
     }
 
-    //private static IEnumerable<int> GenerateTiles()
-    //{
-    //    for (int index = 0; index < MaxRow * MaxColumn; index++)
-    //    {
-    //        yield return 0;
-    //    }
-    //}
-
     private static ObservableCollection<SwipeMergeTile> GenerateTiles()
     {
         ObservableCollection<SwipeMergeTile> board = new ObservableCollection<SwipeMergeTile>();
@@ -38,13 +31,6 @@ public class SwipeMerge : ReadOnlyObservableCollection<SwipeMergeTile>
                 board.Add(new SwipeMergeTile(row, col));
             }
         }
-        //return new ObservableCollection<int>()
-        //{
-        //    0, 0, 0 ,0,
-        //    0, 0, 0, 0,
-        //    0, 0, 0, 0,
-        //    0, 0, 0, 0,
-        //};
         return board;
     }
 
@@ -209,12 +195,12 @@ public class SwipeMerge : ReadOnlyObservableCollection<SwipeMergeTile>
         {
             for (int index = 0; index < numOfTile; index++)
             {
-            GENERATE_VALUE:
-                value = Random.Shared.Next(min, max + 1);
+            GENERATE_VALUE:                
+                value = RandomizerHelper.GetInt(min, max);
                 indexOfTile = Random.Shared.Next(0, Count);
                 if(IsBoardField())
                 {
-                    GameStatus = GameStatus.GameOver;
+                    //GameStatus = GameStatus.GameOver;
                     break;
                 }
                 if (!this[indexOfTile].IsEmpty())
