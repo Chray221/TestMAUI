@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using CommunityToolkit.Maui;
+using TestMAUI.Services;
+using TestMAUI.Services.Interfaces;
 using TestMAUI.ViewModels;
 using TestMAUI.Views;
 
@@ -12,6 +14,7 @@ namespace TestMAUI.Configurations
         {
             // singleton
             services.AddSingleton<AppShell>();
+            services.AddSingleton<ISwipeMergeService>(SwipeMergeService.Instance);
             //services.AddSingleton<INavigationService, MauiNavigationService>();
 
             //pages

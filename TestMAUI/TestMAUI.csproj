@@ -79,6 +79,7 @@
 	  <None Remove="CustomViews\" />
 	  <None Remove="Enums\" />
 	  <None Remove="Models\EventHandlers\" />
+	  <None Remove="CustomViews\SwipeMerge\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
@@ -91,5 +92,6 @@
 	  <Folder Include="CustomViews\" />
 	  <Folder Include="Enums\" />
 	  <Folder Include="Models\EventHandlers\" />
+	  <Folder Include="CustomViews\SwipeMerge\" />
 	</ItemGroup>
 </Project>

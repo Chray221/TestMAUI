@@ -4,6 +4,7 @@
              xmlns:model="clr-namespace:TestMAUI.Models"
              xmlns:view="clr-namespace:TestMAUI.Views"
              xmlns:viewmodel="clr-namespace:TestMAUI.ViewModels"
+             xmlns:swipemerge="clr-namespace:TestMAUI.CustomViews.SwipeMerge"
              x:Class="TestMAUI.Views.SwipeMergePage"
              x:DataType="viewmodel:SwipeMergeViewModel"
              Title="SwipeMergePage">
@@ -32,7 +33,8 @@
                    TextColor="Black"
                    FontSize="35"/>
         </StackLayout>
-        <Grid RowSpacing="2"
+        <swipemerge:SwipeMergeView />
+        <!--<Grid RowSpacing="2"
               ColumnSpacing="2"
               VerticalOptions="Center"
               HorizontalOptions="Center"
@@ -43,19 +45,19 @@
             <BindableLayout.ItemTemplate>
                 <DataTemplate x:DataType="model:SwipeMergeTile">
                     <Label Grid.Row="{Binding Row}"
-                            Grid.Column="{Binding Column}"
-                            BackgroundColor="{StaticResource Gray400}"
-                            Text="{Binding ValueText}"
-                            HorizontalTextAlignment="Center"
-                            VerticalTextAlignment="Center"
-                            HorizontalOptions="Fill"
-                            VerticalOptions="Fill"
-                            TextColor="Black"
-                            FontAttributes="Bold"
-                            FontSize="50">                        
+                           Grid.Column="{Binding Column}"
+                           BackgroundColor="{StaticResource Gray400}"
+                           Text="{Binding ValueText}"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill"
+                           TextColor="Black"
+                           FontAttributes="Bold"
+                           FontSize="50">                        
                     </Label>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
-        </Grid>
+        </Grid>-->
     </VerticalStackLayout>
 </view:BaseContentPage>

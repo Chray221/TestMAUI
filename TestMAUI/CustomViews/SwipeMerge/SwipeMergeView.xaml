@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mergeswipe="clr-namespace:TestMAUI.CustomViews.SwipeMerge"
+             x:Class="TestMAUI.CustomViews.SwipeMerge.SwipeMergeView">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="TileBackgroundColor" Color="{StaticResource Gray200}" />
+        </ResourceDictionary>
+
+    </ContentView.Resources>
+    <ContentView.GestureRecognizers>
+        <SwipeGestureRecognizer Direction="Left"  Swiped="SwipeGestureRecognizer_Swiped"/>
+        <SwipeGestureRecognizer Direction="Right" Swiped="SwipeGestureRecognizer_Swiped"/>
+        <SwipeGestureRecognizer Direction="Up"    Swiped="SwipeGestureRecognizer_Swiped"/>
+        <SwipeGestureRecognizer Direction="Down"  Swiped="SwipeGestureRecognizer_Swiped"/>
+    </ContentView.GestureRecognizers>  
+    <Grid
+        x:Name="board"
+        RowSpacing="2"
+        ColumnSpacing="2"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        ColumnDefinitions="90,90,90,90"
+        RowDefinitions="90,90,90,90"
+        Margin="0,15,0,0">
+
+        <BoxView Grid.Row="0" Grid.Column="0" Background="{StaticResource TileBackgroundColor}" />
+        <BoxView Grid.Row="0" Grid.Column="1" Background="{StaticResource TileBackgroundColor}" />
+        <BoxView Grid.Row="0" Grid.Column="2" Background="{StaticResource TileBackgroundColor}" />
+        <BoxView Grid.Row="0" Grid.Column="3" Background="{StaticResource TileBackgroundColor}" />
+        
+        <BoxView Grid.Row="1" Grid.Column="0" Background="{StaticResource TileBackgroundColor}" />
+        <BoxView Grid.Row="1" Grid.Column="1" Background="{StaticResource TileBackgroundColor}" />
+        <BoxView Grid.Row="1" Grid.Column="2" Background="{StaticResource TileBackgroundColor}" />
+        <BoxView Grid.Row="1" Grid.Column="3" Background="{StaticResource TileBackgroundColor}" />
+        
+        <BoxView Grid.Row="2" Grid.Column="0" Background="{StaticResource TileBackgroundColor}" />
+        <BoxView Grid.Row="2" Grid.Column="1" Background="{StaticResource TileBackgroundColor}" />
+        <BoxView Grid.Row="2" Grid.Column="2" Background="{StaticResource TileBackgroundColor}" />
+        <BoxView Grid.Row="2" Grid.Column="3" Background="{StaticResource TileBackgroundColor}" />
+        
+        <BoxView Grid.Row="3" Grid.Column="0" Background="{StaticResource TileBackgroundColor}" />
+        <BoxView Grid.Row="3" Grid.Column="1" Background="{StaticResource TileBackgroundColor}" />
+        <BoxView Grid.Row="3" Grid.Column="2" Background="{StaticResource TileBackgroundColor}" />
+        <BoxView Grid.Row="3" Grid.Column="3" Background="{StaticResource TileBackgroundColor}" />
+        
+        <mergeswipe:SwipeMergeTileView x:Name="tile00" Row="0" Column="0"
+                                       RightTile="{Reference tile01}"
+                                       DownTile="{Reference tile10}"/>
+        <mergeswipe:SwipeMergeTileView x:Name="tile01" Row="0" Column="1"
+                                       LeftTile="{Reference tile00}"
+                                       RightTile="{Reference tile02}"
+                                       DownTile="{Reference tile11}"/>
+        <mergeswipe:SwipeMergeTileView x:Name="tile02" Row="0" Column="2"
+                                       LeftTile="{Reference tile01}"
+                                       RightTile="{Reference tile03}"
+                                       DownTile="{Reference tile12}"/>
+        <mergeswipe:SwipeMergeTileView x:Name="tile03" Row="0" Column="3"
+                                       LeftTile="{Reference tile02}" 
+                                       DownTile="{Reference tile13}"/>
+        
+        <mergeswipe:SwipeMergeTileView x:Name="tile10" Row="1" Column="0"
+                                       RightTile="{Reference tile11}"
+                                       UpTile ="{Reference tile00}"
+                                       DownTile="{Reference tile20}"/>
+        <mergeswipe:SwipeMergeTileView x:Name="tile11" Row="1" Column="1"
+                                       LeftTile="{Reference tile10}"
+                                       RightTile="{Reference tile12}"
+                                       UpTile ="{Reference tile01}"
+                                       DownTile="{Reference tile21}"/>
+        <mergeswipe:SwipeMergeTileView x:Name="tile12" Row="1" Column="2"
+                                       LeftTile="{Reference tile11}"
+                                       RightTile="{Reference tile13}"
+                                       UpTile ="{Reference tile02}"
+                                       DownTile="{Reference tile22}"/>
+        <mergeswipe:SwipeMergeTileView x:Name="tile13" Row="1" Column="3"
+                                       LeftTile="{Reference tile12}" 
+                                       UpTile ="{Reference tile03}"
+                                       DownTile="{Reference tile23}"/>
+        
+        <mergeswipe:SwipeMergeTileView x:Name="tile20" Row="2" Column="0"
+                                       RightTile="{Reference tile22}"
+                                       UpTile ="{Reference tile10}"
+                                       DownTile="{Reference tile30}"/>
+        <mergeswipe:SwipeMergeTileView x:Name="tile21" Row="2" Column="1"
+                                       LeftTile="{Reference tile20}"
+                                       RightTile="{Reference tile22}"
+                                       UpTile ="{Reference tile11}"
+                                       DownTile="{Reference tile31}"/>
+        <mergeswipe:SwipeMergeTileView x:Name="tile22" Row="2" Column="2"
+                                       LeftTile="{Reference tile21}"
+                                       RightTile="{Reference tile23}"
+                                       UpTile ="{Reference tile12}"
+                                       DownTile="{Reference tile32}"/>
+        <mergeswipe:SwipeMergeTileView x:Name="tile23" Row="2" Column="3"
+                                       LeftTile="{Reference tile22}" 
+                                       UpTile ="{Reference tile13}"
+                                       DownTile="{Reference tile33}"/>
+        
+        <mergeswipe:SwipeMergeTileView x:Name="tile30" Row="3" Column="0"
+                                       RightTile="{Reference tile31}"
+                                       UpTile ="{Reference tile20}" />
+        <mergeswipe:SwipeMergeTileView x:Name="tile31" Row="3" Column="1"
+                                       LeftTile="{Reference tile30}"
+                                       RightTile="{Reference tile32}"
+                                       UpTile ="{Reference tile21}" />
+        <mergeswipe:SwipeMergeTileView x:Name="tile32" Row="3" Column="2"
+                                       LeftTile="{Reference tile31}"
+                                       RightTile="{Reference tile33}"
+                                       UpTile ="{Reference tile22}"/>
+        <mergeswipe:SwipeMergeTileView x:Name="tile33" Row="3" Column="3"
+                                       LeftTile="{Reference tile32}" 
+                                       UpTile ="{Reference tile23}"/>
+    </Grid>
+</ContentView>
+

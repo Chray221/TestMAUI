@@ -1,60 +1,70 @@
-﻿using System;
-using System.Linq;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using TestMAUI.Models;
+using TestMAUI.Services.Interfaces;
 
 namespace TestMAUI.ViewModels
 {
-	public partial class SwipeMergeViewModel : BaseViewModel
+    public partial class SwipeMergeViewModel : BaseViewModel
 	{
-        [ObservableProperty] private SwipeMerge board;
+        ISwipeMergeService _swipeMergeService;
+
+        //[ObservableProperty] private SwipeMerge board;
         [ObservableProperty] private string message;
-        public SwipeMergeViewModel(ILogger<SwipeMergeViewModel> logger) : base(logger)
+        public SwipeMergeViewModel(
+            ILogger<SwipeMergeViewModel> logger,
+            ISwipeMergeService swipeMergeService) : base(logger)
         {
-            board ??= new SwipeMerge();
-            board.Start();
+            _swipeMergeService = swipeMergeService;
+            //board ??= new SwipeMerge();
+            //board.Start();
         }
 
         [RelayCommand]
         public void ReGenerate()
         {
-            MainThread.BeginInvokeOnMainThread(Board.Start);
+            //MainThread.BeginInvokeOnMainThread(Board.Start);
+            MainThread.BeginInvokeOnMainThread(_swipeMergeService.Reset);
             //IsEnded = false;
             SetMessage();
         }
         
         private void SetMessage()
         {
-            Message = $"Top Score: {Board.Max( tile => tile.Value)}";
+            //Message = $"Top Score: {Board.Max( tile => tile.Value)}";
+            Message = $"Top Score: {_swipeMergeService.Score}";
         }
 
         [RelayCommand]
         public async void SwipeLeft()
         {
-            Board.SwipeLeft();
+            //Board.SwipeLeft();
+            await _swipeMergeService.SwipeAsync(SwipeDirection.Left);
             await CheckGame();
         }
 
         [RelayCommand]
         public async void SwipeRight()
         {
-            Board.SwipeRight();
+            //Board.SwipeRight();
+            await _swipeMergeService.SwipeAsync(SwipeDirection.Right);
             await CheckGame();
         }
 
         [RelayCommand]
         public async void SwipeUp()
         {
-            Board.SwipeUp();
+            //Board.SwipeUp();
+            await _swipeMergeService.SwipeAsync(SwipeDirection.Up);
             await CheckGame();
         }
 
         [RelayCommand]
         public async void SwipeDown()
         {
-            Board.SwipeDown();
+            //Board.SwipeDown();
+            await _swipeMergeService.SwipeAsync(SwipeDirection.Down);
             await CheckGame();
         }
 
@@ -64,7 +74,9 @@ namespace TestMAUI.ViewModels
 
             string endTitle = "";
             string endMessage = "";
-            switch (Board.GameStatus)
+            
+            //switch (Board.GameStatus)
+            switch (_swipeMergeService.GameStatus)
             {
                 case GameStatus.GameOver:
                     endTitle = "GAME OVER!";
@@ -83,7 +95,7 @@ namespace TestMAUI.ViewModels
                     break;
             }
 
-            if (!Board.IsPlaying())
+            if (!_swipeMergeService.IsPlaying())
             {
                 //Toast.Make(Message).Show();
                 bool answer = await DisplayAlertAsync(endTitle, endMessage, "Yes", "No");

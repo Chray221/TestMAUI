@@ -20,7 +20,7 @@ namespace TestMAUI.Models
             private set { SetProperty(ref status, value); }
         }
 
-        private static List<int[]> WinningIndex = new List<int[]>
+        private static readonly List<int[]> WinningIndex = new List<int[]>
         {             // top -      , topmiddle |       , right |
             new int[] { 0, 1, 2 }, new int[] { 1, 4, 7 }, new int[] { 2, 5, 8 },
                       // left |     ,    blank          , rightmid -
