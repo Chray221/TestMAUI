@@ -181,10 +181,9 @@ public partial class SwipeMergeView : ContentView
 
     private void Clean()
     {
-        for (int index = 0; index < MaxTiles; index++)
+        foreach(SwipeMergeTileView tile in GetTiles(IsNotNull))
         {
-            if(board[index] is SwipeMergeTileView tileView)
-                tileView.Clear();
+            tile.Clear();
         }
     }
 
@@ -194,7 +193,7 @@ public partial class SwipeMergeView : ContentView
         Generate(2);
     }
 
-    public int GetScore() => GetTiles(IsNotNull).Max(tile => tile.Value);
+    public int GetScore() => GetTiles().Max(tile => tile.Value);
 
     bool isSwiping = false;
     async void SwipeGestureRecognizer_Swiped(object sender, SwipedEventArgs e)
