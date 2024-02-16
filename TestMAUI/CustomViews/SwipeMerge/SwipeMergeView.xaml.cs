@@ -200,7 +200,7 @@ public partial class SwipeMergeView : ContentView
     {
         await SwipeToAsync(e.Direction);
     }
-
+    
     public void Log(string message)
     {
         System.Diagnostics.Debug.WriteLine(message);
