@@ -1,5 +1,8 @@
 ﻿#nullable enable
 
+using Microsoft.Maui.Controls;
+using TestMAUI.Helpers;
+
 namespace TestMAUI.CustomViews.TextTwist;
 
 public partial class TextTwistView : StackLayout
@@ -30,13 +33,14 @@ public partial class TextTwistView : StackLayout
     #endregion
 
     #region _fields
+    private readonly uint _animationSpeed = 120;
+
     private string _word;
     private List<string> _words;
     private IEnumerable<Button> _keys;
     private IEnumerable<Button> _lastEnteredKeys;
     private IEnumerable<WordTilesView> _wordsView;
-    //private ILookup<string, Button> keys;
-    uint animationSpeed = 120;
+    private bool _isPaused = false;
     IDispatcherTimer _timer;
     #endregion
 
@@ -78,11 +82,18 @@ public partial class TextTwistView : StackLayout
 
         BindableLayout.SetItemsSource(enteredKeyList, _word.ToCharArray());
 
-        BindableLayout.SetItemsSource(keyList, _word.ToCharArray());
-        //keys = keyList.OfType<Button>().ToLookup(view => view.Text);
-        _keys = keyList.OfType<Button>();
+        //BindableLayout.SetItemsSource(keyList, _word.ToCharArray());
+        if (Resources.TryGetValue("KeyButton", out Style keyStyle))
+        {
+            for (int index = 0; index < _word.Length; index++)
+            {
+                Button newKey = new Button() { Style = keyStyle, Text = ""+_word[index] };
+                newKey.Clicked += KeyButton_Clicked;
+                inputContainerView.Add(newKey, index, 2);
+            }
+        }
+        _keys = inputContainerView.OfType<Button>();
 
-        //BindableLayout.SetItemsSource(wordList, words);
         wordList.ItemsSource = _words.OrderBy( word => word.Length).ThenBy(word => word);
         _wordsView = wordList.OfType<WordTilesView>();
         await ShuffleKeys();
@@ -98,8 +109,16 @@ public partial class TextTwistView : StackLayout
             _timer.Tick += _timer_Tick;
         }
 
-        StopTimer();
+        if(!_isPaused)
+            StopTimer();
         _timer.Start();
+        _isPaused = true;
+    }
+
+    public void PauseTimer()
+    {
+        _isPaused = true;
+        _timer.Stop();
     }
 
     public void StopTimer()
@@ -114,7 +133,7 @@ public partial class TextTwistView : StackLayout
     }
 
     #region Events
-    async void KeyButton_Clicked(System.Object sender, System.EventArgs e)
+    async void KeyButton_Clicked(object? sender, System.EventArgs e)
     {
         if (sender is Button key)
         {
@@ -122,7 +141,7 @@ public partial class TextTwistView : StackLayout
         }
     }
 
-    async void Button_Clicked(System.Object sender, System.EventArgs e)
+    async void Button_Clicked(object? sender, System.EventArgs e)
     {
         if (sender is Button button)
         {
@@ -257,13 +276,14 @@ public partial class TextTwistView : StackLayout
         // if key
         else
         {
-            int enteredKeysCount = index ?? keyList.OfType<Button>().Count(IsKeyEntered);
+            int enteredKeysCount = index ?? _keys.Count(IsKeyEntered);
             View moveToView = (enteredKeyList[enteredKeysCount] as View)!;
             //button.ClassId = "EK" + (enteredKeysCount);
             button.ClassId = "" + (enteredKeysCount);
             double offset = ((button.HeightRequest - moveToView.HeightRequest) / 2);
             double nextButtonX = moveToView.X - button.X - offset;
-            double nextButtonY = enteredKeyList.Y - keyList.Y - offset;
+            //double nextButtonY = enteredKeyList.Y - keyList.Y - offset;
+            double nextButtonY = enteredKeyList.Y - button.Y - offset;
             await MoveKeyAsync(button, nextButtonX, nextButtonY);
         }
     }
@@ -276,8 +296,8 @@ public partial class TextTwistView : StackLayout
                 key.TranslateTo(
                     x: newX,
                     y: newY,
-                    length: animationSpeed),
-                key.RotateTo(720, animationSpeed)
+                    length: _animationSpeed),
+                key.RotateTo(720, _animationSpeed)
                 );
             key.TranslationX = newX;
             key.TranslationY = newY;

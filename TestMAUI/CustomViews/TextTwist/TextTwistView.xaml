@@ -6,6 +6,7 @@
              x:Class="TestMAUI.CustomViews.TextTwist.TextTwistView"
              BackgroundColor="{StaticResource MainTheme}"
              Spacing="10"
+             Padding="10"
              x:Name="textTwistView">
     <StackLayout.Resources>
         <ResourceDictionary>
@@ -20,7 +21,7 @@
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="TextColor" Value="{StaticResource EnteredKeyColor}"/>
                 <Setter Property="BackgroundColor" Value="{StaticResource EnteredKeyBorderColor}"/>
-                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
                 <Setter Property="BorderWidth" Value="1"/>
                 <Setter Property="BorderColor" Value="{StaticResource EnteredKeyColor}"/>
@@ -77,42 +78,31 @@
         Orientation="Horizontal"
         Spacing="10"
         VerticalOptions="Start"
-        HorizontalOptions="FillAndExpand">
-        <!--<Button Style="{StaticResource MenuButton}" Text="ROUND 1"/>-->
+        HorizontalOptions="FillAndExpand"
+        Margin="10,0">
         <Button Style="{StaticResource MenuButton}"
                 Text="{Binding Round, StringFormat='ROUND {0}',Source={Reference textTwistView}}"/>
-        <!--<Button Style="{StaticResource MenuButton}" Text="SCORE: 1500"/>-->
         <Button Style="{StaticResource MenuButton}"
                 Text="{Binding Score, StringFormat='SCORE: {0}',Source={Reference textTwistView}}"/>
-        <!--<Button Style="{StaticResource MenuButton}" Text="TIME: 1:00"/>-->
         <Button x:Name="timerView" Style="{StaticResource MenuButton}"
                 Text="{Binding Timer, StringFormat='TIME: {0:mm:ss}',Source={Reference textTwistView}}"/>
     </StackLayout>
     <!-- list of word tiles -->
-    <!--<FlexLayout
+    <Frame
+        Margin="10,0"
+        Padding="10"
+        BorderColor="{StaticResource TileBlue}"
+        BackgroundColor="Transparent"
+        CornerRadius="8"
+        VerticalOptions="StartAndExpand"
+        HorizontalOptions="FillAndExpand">
+        <cv:MyFlexLayout
         x:Name="wordList"
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand"
         InputTransparent="True"
         CascadeInputTransparent="True"
         Direction="Column"
-        BackgroundColor="Orange"
-        Wrap="Wrap"
-        HeightRequest="300">
-        <BindableLayout.ItemTemplate>
-            <DataTemplate>
-                <texttwist:WordTilesView Word="{Binding .}"/>
-            </DataTemplate>
-        </BindableLayout.ItemTemplate>
-    </FlexLayout>-->
-    <cv:MyFlexLayout
-        x:Name="wordList"
-        VerticalOptions="FillAndExpand"
-        HorizontalOptions="FillAndExpand"
-        InputTransparent="True"
-        CascadeInputTransparent="True"
-        Direction="Column"
-        BackgroundColor="Orange"
         HeightRequest="300"
         MaxColumn="3"
         RowSpacing="5"
@@ -124,47 +114,40 @@
             </DataTemplate>
         </cv:MyFlexLayout.ItemTemplate>
     </cv:MyFlexLayout>
-    <!-- Entered Keys -->
-    <FlexLayout
-        x:Name="enteredKeyList"
-        VerticalOptions="End"
-        HorizontalOptions="FillAndExpand"
-        InputTransparent="True"
-        CascadeInputTransparent="True"
-        Direction="Row"
-        JustifyContent="SpaceEvenly"
-        BackgroundColor="Green">
-        <BindableLayout.ItemTemplate>
-            <DataTemplate>
-                <Button Style="{StaticResource EnteredKeyButton}"/>
-            </DataTemplate>
-        </BindableLayout.ItemTemplate>
-    </FlexLayout>
-    <FlexLayout
-        HorizontalOptions="FillAndExpand"
-        Direction="Row"
-        JustifyContent="SpaceEvenly"
-        BackgroundColor="Yellow"
-        Margin="0,0,0,54">
-        <Button Style="{StaticResource ActionButton}" Text="TWIST" Clicked="Button_Clicked"/>
-        <Button Style="{StaticResource ActionButton}" Text="LAST" Clicked="Button_Clicked"/>
-        <Button Style="{StaticResource ActionButton}" Text="ENTER" Clicked="Button_Clicked"/>
-        <Button Style="{StaticResource ActionButton}" Text="CLEAR" Clicked="Button_Clicked"/>
-        <Button Style="{StaticResource ActionButton}" Text="DELETE" Clicked="Button_Clicked"/>
-    </FlexLayout>
-    <FlexLayout
-        x:Name="keyList"
-        HorizontalOptions="FillAndExpand"
-        Direction="Row"
-        JustifyContent="SpaceEvenly"
-        BackgroundColor="Red"
-        Margin="0,0,0,54">
-        <BindableLayout.ItemTemplate>
-            <DataTemplate>
-                <Button Style="{StaticResource KeyButton}" Text="{Binding .,StringFormat='{0}'}"
-                        Clicked="KeyButton_Clicked"/>
-            </DataTemplate>
-        </BindableLayout.ItemTemplate>
-    </FlexLayout>
+
+    </Frame>
+    <Grid x:Name="inputContainerView" ColumnDefinitions="*,*,*,*,*,*"
+          RowDefinitions="auto,*,auto"
+          RowSpacing="10"
+          Margin="0,0,0,54">
+        <FlexLayout
+            x:Name="enteredKeyList"
+            Grid.Row="0"
+            Grid.ColumnSpan="6"
+            VerticalOptions="End"
+            HorizontalOptions="FillAndExpand"
+            InputTransparent="True"
+            CascadeInputTransparent="True"
+            Direction="Row"
+            JustifyContent="SpaceEvenly">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Button Style="{StaticResource EnteredKeyButton}"/>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </FlexLayout>
+        <FlexLayout
+            Grid.Row="1"
+            Grid.ColumnSpan="6"
+            HorizontalOptions="FillAndExpand"
+            Direction="Row"
+            JustifyContent="SpaceEvenly">
+            <Button Style="{StaticResource ActionButton}" Text="TWIST" Clicked="Button_Clicked"/>
+            <Button Style="{StaticResource ActionButton}" Text="LAST" Clicked="Button_Clicked"/>
+            <Button Style="{StaticResource ActionButton}" Text="ENTER" Clicked="Button_Clicked"/>
+            <Button Style="{StaticResource ActionButton}" Text="CLEAR" Clicked="Button_Clicked"/>
+            <Button Style="{StaticResource ActionButton}" Text="DELETE" Clicked="Button_Clicked"/>
+        </FlexLayout>
+    </Grid>
 </StackLayout>
 
