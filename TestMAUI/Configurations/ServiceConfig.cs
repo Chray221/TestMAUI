@@ -23,6 +23,7 @@ namespace TestMAUI.Configurations
             services.AddTransientShell<MineSwepperPage, MineSweeperViewModel>();
             services.AddTransientShell<TicTacToePage, TicTacToeViewModel>();
             services.AddTransientShell<SwipeMergePage, SwipeMergeViewModel>();
+            services.AddTransientShell<TextTwistPage, TextTwistViewModel>();
 
             return services;
         }

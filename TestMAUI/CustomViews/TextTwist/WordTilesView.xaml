@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HorizontalStackLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TestMAUI.CustomViews.TextTwist.WordTilesView"
+             Spacing="3"
+             HorizontalOptions="Start"
+             VerticalOptions="Start"
+             HeightRequest="20"
+             IsEnabled="False"
+             x:Name="wordTilesView">
+    <HorizontalStackLayout.Resources>
+        <ResourceDictionary>
+            <Color x:Key="SecondTheme">#02FF86</Color>
+            <Color x:Key="TileBlue">#0055FF</Color>
+            <Color x:Key="EnteredKeyBorderColor">#FFFFFF</Color>
+        </ResourceDictionary>
+    </HorizontalStackLayout.Resources>
+    <BindableLayout.ItemTemplate>
+        <DataTemplate>
+            <Frame
+                Padding="0"
+                WidthRequest="15"
+                HeightRequest="20"
+                CornerRadius="0"
+                BorderColor="{StaticResource TileBlue}"
+                BackgroundColor="{StaticResource EnteredKeyBorderColor}"
+                HorizontalOptions="Start"
+                VerticalOptions="Start">
+                <Frame.Triggers>
+                    <MultiTrigger TargetType="Frame">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition
+                                Binding="{Binding IsShow,Source={Reference wordTilesView}}"
+                                Value="true"/>
+                            <BindingCondition
+                                Binding="{Binding IsCorrect,Source={Reference wordTilesView}}"
+                                Value="false"/>
+                        </MultiTrigger.Conditions>
+                        <Setter Property="BackgroundColor" Value="{StaticResource SecondTheme}"/>
+
+                    </MultiTrigger>
+                </Frame.Triggers>
+                <Label
+                    WidthRequest="15"
+                    HeightRequest="20"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    TextColor="Transparent"
+                    BackgroundColor="{StaticResource EnteredKeyBorderColor}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    Text="{Binding .,StringFormat='{0}'}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label"
+                                     Binding="{Binding IsShow,Source={Reference wordTilesView}}"
+                                     Value="true">                        
+                            <Setter Property="TextColor" Value="{StaticResource Black}"/>
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Frame>
+        </DataTemplate>
+    </BindableLayout.ItemTemplate>
+</HorizontalStackLayout>
+

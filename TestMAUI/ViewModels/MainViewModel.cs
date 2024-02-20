@@ -69,6 +69,23 @@ namespace TestMAUI.ViewModels
         }
 
         [RelayCommand]
+        public async Task ToPage(string page)
+        {
+            switch(page)
+            {
+                case "2048":
+                    await NavigateToAsync<SwipeMergePage>();
+                    break;
+                case "TextTwist":
+                    await NavigateToAsync<TextTwistPage>();
+                    break;
+                case "TicTacToe":
+                    await NavigateToAsync<TicTacToePage>();
+                    break;
+            }
+        }
+
+        [RelayCommand]
         public void ExpandMineSweeper()
         {
             MineSweeperExpanded = !MineSweeperExpanded;

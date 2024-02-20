@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cv="clr-namespace:TestMAUI.CustomViews"
+             xmlns:texttwist="clr-namespace:TestMAUI.CustomViews.TextTwist"
+             x:Class="TestMAUI.CustomViews.TextTwist.TextTwistView"
+             BackgroundColor="{StaticResource MainTheme}"
+             Spacing="10"
+             x:Name="textTwistView">
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <Color x:Key="MainTheme">#00E0FF</Color>
+            <Color x:Key="SecondTheme">#02FF86</Color>
+            <Color x:Key="TileBlue">#0055FF</Color>
+            <Color x:Key="EnteredKeyColor">#0066FF</Color>
+            <Color x:Key="EnteredKeyBorderColor">#FFFFFF</Color>
+
+            <Style x:Key="KeyButton" TargetType="Button">
+                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="{StaticResource EnteredKeyColor}"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource EnteredKeyBorderColor}"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="BorderColor" Value="{StaticResource EnteredKeyColor}"/>
+                <Setter Property="CornerRadius" Value="22"/>
+                <Setter Property="HeightRequest" Value="44"/>
+                <Setter Property="WidthRequest" Value="44"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+            <Style x:Key="EnteredKeyButton" TargetType="Button">
+                <Setter Property="FontSize" Value="30"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="Transparent"/>
+                <!--<Setter Property="BackgroundColor" Value="{StaticResource EnteredKeyColor}"/>-->
+                <Setter Property="Background" Value="{SolidColorBrush Color={StaticResource EnteredKeyColor}}"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="IsEnabled" Value="False"/>
+                <Setter Property="BorderColor" Value="{StaticResource EnteredKeyBorderColor}"/>
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="CornerRadius" Value="23"/>
+                <Setter Property="HeightRequest" Value="46"/>
+                <Setter Property="WidthRequest" Value="46"/>
+            </Style>
+            <Style x:Key="MenuButton" TargetType="Button">
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="{StaticResource Black}"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="BorderColor" Value="{StaticResource TileBlue}"/>
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="CornerRadius" Value="5"/>
+                <Setter Property="InputTransparent" Value="True"/>
+                <!--<Setter Property="Padding" Value="10,5"/>-->
+            </Style>
+            <Style x:Key="ActionButton" TargetType="Button">
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="FontAttributes" Value="None"/>
+                <Setter Property="TextColor" Value="{StaticResource Black}"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource SecondTheme}"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="BorderColor" Value="{StaticResource TileBlue}"/>
+                <Setter Property="BorderWidth" Value="1"/>
+                <!--<Setter Property="HeightRequest" Value="28"/>-->
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Padding" Value="10,5"/>
+            </Style>
+        </ResourceDictionary>
+    </StackLayout.Resources>
+    <StackLayout
+        Orientation="Horizontal"
+        Spacing="10"
+        VerticalOptions="Start"
+        HorizontalOptions="FillAndExpand">
+        <!--<Button Style="{StaticResource MenuButton}" Text="ROUND 1"/>-->
+        <Button Style="{StaticResource MenuButton}"
+                Text="{Binding Round, StringFormat='ROUND {0}',Source={Reference textTwistView}}"/>
+        <!--<Button Style="{StaticResource MenuButton}" Text="SCORE: 1500"/>-->
+        <Button Style="{StaticResource MenuButton}"
+                Text="{Binding Score, StringFormat='SCORE: {0}',Source={Reference textTwistView}}"/>
+        <!--<Button Style="{StaticResource MenuButton}" Text="TIME: 1:00"/>-->
+        <Button x:Name="timerView" Style="{StaticResource MenuButton}"
+                Text="{Binding Timer, StringFormat='TIME: {0:mm:ss}',Source={Reference textTwistView}}"/>
+    </StackLayout>
+    <!-- list of word tiles -->
+    <!--<FlexLayout
+        x:Name="wordList"
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand"
+        InputTransparent="True"
+        CascadeInputTransparent="True"
+        Direction="Column"
+        BackgroundColor="Orange"
+        Wrap="Wrap"
+        HeightRequest="300">
+        <BindableLayout.ItemTemplate>
+            <DataTemplate>
+                <texttwist:WordTilesView Word="{Binding .}"/>
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </FlexLayout>-->
+    <cv:MyFlexLayout
+        x:Name="wordList"
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand"
+        InputTransparent="True"
+        CascadeInputTransparent="True"
+        Direction="Column"
+        BackgroundColor="Orange"
+        HeightRequest="300"
+        MaxColumn="3"
+        RowSpacing="5"
+        ColumnSpacing="15"
+        MaxRow="9">
+        <cv:MyFlexLayout.ItemTemplate>
+            <DataTemplate>
+                <texttwist:WordTilesView Word="{Binding .}"/>
+            </DataTemplate>
+        </cv:MyFlexLayout.ItemTemplate>
+    </cv:MyFlexLayout>
+    <!-- Entered Keys -->
+    <FlexLayout
+        x:Name="enteredKeyList"
+        VerticalOptions="End"
+        HorizontalOptions="FillAndExpand"
+        InputTransparent="True"
+        CascadeInputTransparent="True"
+        Direction="Row"
+        JustifyContent="SpaceEvenly"
+        BackgroundColor="Green">
+        <BindableLayout.ItemTemplate>
+            <DataTemplate>
+                <Button Style="{StaticResource EnteredKeyButton}"/>
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </FlexLayout>
+    <FlexLayout
+        HorizontalOptions="FillAndExpand"
+        Direction="Row"
+        JustifyContent="SpaceEvenly"
+        BackgroundColor="Yellow"
+        Margin="0,0,0,54">
+        <Button Style="{StaticResource ActionButton}" Text="TWIST" Clicked="Button_Clicked"/>
+        <Button Style="{StaticResource ActionButton}" Text="LAST" Clicked="Button_Clicked"/>
+        <Button Style="{StaticResource ActionButton}" Text="ENTER" Clicked="Button_Clicked"/>
+        <Button Style="{StaticResource ActionButton}" Text="CLEAR" Clicked="Button_Clicked"/>
+        <Button Style="{StaticResource ActionButton}" Text="DELETE" Clicked="Button_Clicked"/>
+    </FlexLayout>
+    <FlexLayout
+        x:Name="keyList"
+        HorizontalOptions="FillAndExpand"
+        Direction="Row"
+        JustifyContent="SpaceEvenly"
+        BackgroundColor="Red"
+        Margin="0,0,0,54">
+        <BindableLayout.ItemTemplate>
+            <DataTemplate>
+                <Button Style="{StaticResource KeyButton}" Text="{Binding .,StringFormat='{0}'}"
+                        Clicked="KeyButton_Clicked"/>
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </FlexLayout>
+</StackLayout>
+

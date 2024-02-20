@@ -67,15 +67,22 @@
                 Text="To TicTacToe"
                 HorizontalOptions="Center"
                 SemanticProperties.Hint="{Binding ., StringFormat='To TicTacToe'}"
-                Command="{Binding ToTicTacToeCommand}"
-                CommandParameter="{Binding .}"/>
+                Command="{Binding ToPageCommand}"
+                CommandParameter="TicTacToe"/>
             
             <Button Margin="0,15,0,0"
                 Text="To 2048"
                 HorizontalOptions="Center"
                 SemanticProperties.Hint="{Binding ., StringFormat='To 2048'}"
-                Command="{Binding ToSwipeMergeCommand}"
-                CommandParameter="{Binding .}"/>
+                Command="{Binding ToPageCommand}"
+                CommandParameter="2048"/>
+            
+            <Button Margin="0,15,0,0"
+                Text="To TextTwist"
+                HorizontalOptions="Center"
+                SemanticProperties.Hint="{Binding ., StringFormat='To TextTwist'}"
+                Command="{Binding ToPageCommand}"
+                CommandParameter="TextTwist"/>
 
         </VerticalStackLayout>
     </ScrollView>

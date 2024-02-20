@@ -80,6 +80,7 @@
 	  <None Remove="Enums\" />
 	  <None Remove="Models\EventHandlers\" />
 	  <None Remove="CustomViews\SwipeMerge\" />
+	  <None Remove="CustomViews\TextTwist\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
@@ -93,5 +94,6 @@
 	  <Folder Include="Enums\" />
 	  <Folder Include="Models\EventHandlers\" />
 	  <Folder Include="CustomViews\SwipeMerge\" />
+	  <Folder Include="CustomViews\TextTwist\" />
 	</ItemGroup>
 </Project>
