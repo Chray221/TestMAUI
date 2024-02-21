@@ -5,6 +5,7 @@ namespace TestMAUI.CustomViews.TextTwist;
 public partial class KeyView : Button
 {
     private readonly uint _animationSpeed = 120;
+    private readonly uint _shakeOffset = 4;
     private KeyView? _pendingToKey = null;
 
     public KeyView()
@@ -33,15 +34,14 @@ public partial class KeyView : Button
     {
         double oldTranslationX = TranslationX;
         uint shakeAnimationSpeed = _animationSpeed / 5;
-        int shakeOffset = 4;
         await this.TranslateTo(
-            x: oldTranslationX - shakeOffset, y: TranslationY, length: shakeAnimationSpeed);
+            x: oldTranslationX - _shakeOffset, y: TranslationY, length: shakeAnimationSpeed);
         await this.TranslateTo(
-            x: oldTranslationX + shakeOffset, y: TranslationY, length: shakeAnimationSpeed);
+            x: oldTranslationX + _shakeOffset, y: TranslationY, length: shakeAnimationSpeed);
         await this.TranslateTo(
-            x: oldTranslationX - shakeOffset, y: TranslationY, length: shakeAnimationSpeed);
+            x: oldTranslationX - _shakeOffset, y: TranslationY, length: shakeAnimationSpeed);
         await this.TranslateTo(
-            x: oldTranslationX + shakeOffset, y: TranslationY, length: shakeAnimationSpeed);
+            x: oldTranslationX + _shakeOffset, y: TranslationY, length: shakeAnimationSpeed);
         await this.TranslateTo(
             x: oldTranslationX , y: TranslationY, length: shakeAnimationSpeed);
         TranslationX = oldTranslationX;

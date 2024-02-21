@@ -1,10 +1,12 @@
 ﻿#nullable enable
 
 using TestMAUI.Helpers;
+using TestMAUI.Services;
+using TestMAUI.Services.Interfaces;
 
 namespace TestMAUI.CustomViews.TextTwist;
 
-public partial class TextTwistView : StackLayout
+public partial class TextTwistView : StackLayout , ITextTwistService
 {
     #region BindableProperties
     public static readonly BindableProperty ScoreProperty = BindableProperty.Create(propertyName: nameof(Score), returnType: typeof(int), declaringType: typeof(TextTwistView), defaultValue: 0);
@@ -32,16 +34,13 @@ public partial class TextTwistView : StackLayout
     #endregion
 
     #region _fields
-    private readonly uint _animationSpeed = 120;
-
-    //private IEnumerable<Button> _keys;
-    //private IEnumerable<Button> _lastEnteredKeys;
     private IEnumerable<KeyView> _keys;
     private IEnumerable<KeyView> _lastEnteredKeys;
     private IEnumerable<WordTilesView> _wordsView;
 
     private bool _isPaused = false;
     private bool _isShuffling = false;
+    private bool _isChecking = false;
 
     IDispatcherTimer _timer;
     #endregion
@@ -49,6 +48,7 @@ public partial class TextTwistView : StackLayout
     public TextTwistView()
 	{
 		InitializeComponent();
+        TextTwistService.Instance.SetService(this);
 		_= SetWords(null);
     }
 
@@ -138,10 +138,10 @@ public partial class TextTwistView : StackLayout
             }
         }
 
-        _keys = inputContainerView.OfType<KeyView>();
+        _keys = inputContainerView.OfType<KeyView>().ToList();
 
         wordList.ItemsSource = words.OrderBy(word => word.Length).ThenBy(word => word);
-        _wordsView = wordList.OfType<WordTilesView>();
+        _wordsView = wordList.OfType<WordTilesView>().ToList();
         await ShuffleKeys();
         StartTimer();
     }
@@ -231,12 +231,11 @@ public partial class TextTwistView : StackLayout
         }
     }
 
-    bool isChecking = false;
     public async Task CheckEnteredWordAsync()
     {
-        if (isChecking) return;
+        if (_isChecking) return;
 
-        isChecking = true;
+        _isChecking = true;
         if (GetEnteredWordView() is WordTilesView wordView)
         {
             _lastEnteredKeys = GetEnteredKeys().ToList();
@@ -254,7 +253,7 @@ public partial class TextTwistView : StackLayout
         await Parallel.ForEachAsync(
             source: GetEnteredKeys(),
             body: async (key, Token) => await key.ShakeAsync());
-        isChecking = false;
+        _isChecking = false;
     }
 
     public async Task DeleteEnteredKeyAsync()

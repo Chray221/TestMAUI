@@ -63,6 +63,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -81,6 +82,13 @@
 	  <None Remove="Models\EventHandlers\" />
 	  <None Remove="CustomViews\SwipeMerge\" />
 	  <None Remove="CustomViews\TextTwist\" />
+	  <None Remove="Repository\" />
+	  <None Remove="Repository\IRepository\" />
+	  <None Remove="Data\" />
+	  <None Remove="Helpers\SQLite\" />
+	  <None Remove="Resources\Files\" />
+	  <None Remove="Resources\Files\EnglishDictionary.db" />
+	  <None Remove="Helpers\Extensions\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
@@ -95,5 +103,14 @@
 	  <Folder Include="Models\EventHandlers\" />
 	  <Folder Include="CustomViews\SwipeMerge\" />
 	  <Folder Include="CustomViews\TextTwist\" />
+	  <Folder Include="Repository\" />
+	  <Folder Include="Repository\IRepository\" />
+	  <Folder Include="Data\" />
+	  <Folder Include="Helpers\SQLite\" />
+	  <Folder Include="Resources\Files\" />
+	  <Folder Include="Helpers\Extensions\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Files\EnglishDictionary.db" />
 	</ItemGroup>
 </Project>

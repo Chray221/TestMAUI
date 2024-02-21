@@ -1,0 +1,11 @@
+﻿using System;
+namespace TestMAUI.Helpers.Extensions
+{
+	public static class SQLiteExteionsions
+	{
+		public SQLiteExteionsions()
+		{
+		}
+	}
+}
+

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using CommunityToolkit.Maui;
+using TestMAUI.Repository;
+using TestMAUI.Repository.IRepository;
 using TestMAUI.Services;
 using TestMAUI.Services.Interfaces;
 using TestMAUI.ViewModels;
@@ -15,7 +17,10 @@ namespace TestMAUI.Configurations
             // singleton
             services.AddSingleton<AppShell>();
             services.AddSingleton<ISwipeMergeService>(SwipeMergeService.Instance);
+            services.AddSingleton<ITextTwistService>(TextTwistService.Instance);
             //services.AddSingleton<INavigationService, MauiNavigationService>();
+
+            services.AddSingleton<IDictionaryRepository, DictionaryRepository>();
 
             //pages
             //services.AddTransient<MainPage>();
