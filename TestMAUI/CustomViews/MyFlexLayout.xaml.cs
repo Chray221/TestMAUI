@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using Microsoft.Maui.Layouts;
 
 namespace TestMAUI.CustomViews;
 
+[DebuggerDisplay("Text:{Text,nq}, ClassId:{ClassId,nq}")]
 public partial class MyFlexLayout : Grid
 {
     #region BindableProperties

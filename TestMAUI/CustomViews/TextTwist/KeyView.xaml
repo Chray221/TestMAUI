@@ -3,8 +3,17 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="TestMAUI.CustomViews.TextTwist.KeyView"
-    FontSize="30"
+    FontSize="25"
     FontAttributes="Bold"
-    TextColor="#0066FF">
+    TextColor="{StaticResource EnteredKeyColor}"
+    BackgroundColor="{StaticResource EnteredKeyBorderColor}"
+    HorizontalOptions="Center"
+    VerticalOptions="Center"
+    BorderWidth="1"
+    BorderColor="{StaticResource EnteredKeyColor}"
+    CornerRadius="22"
+    HeightRequest="44"
+    WidthRequest="44"
+    Padding="0">
 </Button>
 

@@ -1,6 +1,5 @@
 ﻿#nullable enable
 
-using Microsoft.Maui.Controls;
 using TestMAUI.Helpers;
 
 namespace TestMAUI.CustomViews.TextTwist;
@@ -35,12 +34,15 @@ public partial class TextTwistView : StackLayout
     #region _fields
     private readonly uint _animationSpeed = 120;
 
-    private string _word;
-    private List<string> _words;
-    private IEnumerable<Button> _keys;
-    private IEnumerable<Button> _lastEnteredKeys;
+    //private IEnumerable<Button> _keys;
+    //private IEnumerable<Button> _lastEnteredKeys;
+    private IEnumerable<KeyView> _keys;
+    private IEnumerable<KeyView> _lastEnteredKeys;
     private IEnumerable<WordTilesView> _wordsView;
+
     private bool _isPaused = false;
+    private bool _isShuffling = false;
+
     IDispatcherTimer _timer;
     #endregion
 
@@ -50,95 +52,16 @@ public partial class TextTwistView : StackLayout
 		_= SetWords(null);
     }
 
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="words">should be 6 letter word or up</param>
-	public async Task SetWords(List<string> strings)
-    {
-        _words = strings ?? new List<string>()
-        {
-            "EON",
-            "MEN",
-            "MET",
-            "MOM",
-            "MOT",
-            "NET",
-            "NOT",
-            "ONE",
-            "TEN",
-            "TOE",
-            "TON",
-            "MEMO",
-            "MOTE",
-            "NOTE",
-            "OMEN",
-            "TOME",
-            "TONE",
-            "MOMENT"
-        };
-
-        _word = _words.MaxBy(w => w.Length) ?? string.Empty;
-
-        BindableLayout.SetItemsSource(enteredKeyList, _word.ToCharArray());
-
-        //BindableLayout.SetItemsSource(keyList, _word.ToCharArray());
-        if (Resources.TryGetValue("KeyButton", out Style keyStyle))
-        {
-            for (int index = 0; index < _word.Length; index++)
-            {
-                Button newKey = new Button() { Style = keyStyle, Text = ""+_word[index] };
-                newKey.Clicked += KeyButton_Clicked;
-                inputContainerView.Add(newKey, index, 2);
-            }
-        }
-        _keys = inputContainerView.OfType<Button>();
-
-        wordList.ItemsSource = _words.OrderBy( word => word.Length).ThenBy(word => word);
-        _wordsView = wordList.OfType<WordTilesView>();
-        await ShuffleKeys();
-        StartTimer();
-    }
-
-    public void StartTimer()
-    {
-        if(_timer is null)
-        {
-            _timer ??= Application.Current?.Dispatcher.CreateTimer() ?? Dispatcher.CreateTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += _timer_Tick;
-        }
-
-        if(!_isPaused)
-            StopTimer();
-        _timer.Start();
-        _isPaused = true;
-    }
-
-    public void PauseTimer()
-    {
-        _isPaused = true;
-        _timer.Stop();
-    }
-
-    public void StopTimer()
-    {
-        Timer = TimeSpan.FromMinutes(2);
-        _timer.Stop();
-    }
-
-    private void _timer_Tick(object? sender, EventArgs e)
-    {
-        Timer = Timer.Subtract(_timer.Interval);
-    }
-
     #region Events
     async void KeyButton_Clicked(object? sender, System.EventArgs e)
     {
-        if (sender is Button key)
-        {
+        //if (sender is Button key)
+        //{
+        //    await MoveToIndex(key);
+        //}
+        if (sender is KeyView key)
             await MoveToIndex(key);
-        }
+        
     }
 
     async void Button_Clicked(object? sender, System.EventArgs e)
@@ -164,28 +87,117 @@ public partial class TextTwistView : StackLayout
             view.timerView.Text = $"TIME: {newTimer.Minutes:00}:{newTimer.Seconds:00}";
         }
     }
+
+    private void _timer_Tick(object? sender, EventArgs e)
+    {
+        Timer = Timer.Subtract(_timer.Interval);
+    }
     #endregion
 
     #region Public Methods
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="words">should be 6 letter word or up</param>
+    public async Task SetWords(List<string>? words)
+    {
+        words ??= new List<string>()
+        {
+            "EON",
+            "MEN",
+            "MET",
+            "MOM",
+            "MOT",
+            "NET",
+            "NOT",
+            "ONE",
+            "TEN",
+            "TOE",
+            "TON",
+            "MEMO",
+            "MOTE",
+            "NOTE",
+            "OMEN",
+            "TOME",
+            "TONE",
+            "MOMENT"
+        };
+
+        string word = words.MaxBy(w => w.Length) ?? string.Empty;
+
+        BindableLayout.SetItemsSource(enteredKeyList, word.ToCharArray());
+
+        if (Resources.TryGetValue("KeyButton", out Style keyStyle))
+        {
+            for (int index = 0; index < word.Length; index++)
+            {
+                KeyView newKey = new() { Text = "" + word[index] };
+                newKey.Clicked += KeyButton_Clicked;
+                inputContainerView.Add(newKey, index, 2);
+            }
+        }
+
+        _keys = inputContainerView.OfType<KeyView>();
+
+        wordList.ItemsSource = words.OrderBy(word => word.Length).ThenBy(word => word);
+        _wordsView = wordList.OfType<WordTilesView>();
+        await ShuffleKeys();
+        StartTimer();
+    }
+
+    public void StartTimer()
+    {
+        if (_timer is null)
+        {
+            _timer ??= Application.Current?.Dispatcher.CreateTimer() ?? Dispatcher.CreateTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += _timer_Tick;
+        }
+
+        if (!_isPaused)
+            StopTimer();
+        _timer.Start();
+        _isPaused = true;
+    }
+
+    public void PauseTimer()
+    {
+        _isPaused = true;
+        _timer.Stop();
+    }
+
+    public void StopTimer()
+    {
+        Timer = TimeSpan.FromMinutes(2);
+        _timer.Stop();
+    }
+
     public async Task ClearAsync()
     {
         List<Task> tasks = new();
-        foreach (Button key in _keys)
+        //foreach (Button key in _keys)
+        //{
+        //    tasks.Add(ResetKeyAsync(key));
+        //}
+        foreach (KeyView key in _keys)
         {
-            tasks.Add(ResetKeyAsync(key));
+            tasks.Add(key.ResetAsync());
         }
         await Task.WhenAll(tasks);
     }
 
-    private bool isShuffling = false;
     public async Task ShuffleKeys()
     {
-        if (!isShuffling)
+        System.Diagnostics.Debug.WriteLine("===SWAPING===");
+        if (!_isShuffling)
         {
-            isShuffling = true;
+            _isShuffling = true;
             List<Task> tasks = new();
-            var availableKeys = _keys.Where(key => !IsKeyEntered(key));
-            int availableKeysCount = availableKeys.Count();
+            List<KeyView> swappedViews = new List<KeyView>();
+
+            var availableKeys = _keys.Where(key => !key.IsEntered()).ToList();
+            int availableKeysCount = availableKeys.Count;
             if (availableKeysCount > 1)
             {
                 int maxShuffleCount = Random.Shared.Next(1, availableKeysCount);
@@ -197,8 +209,11 @@ public partial class TextTwistView : StackLayout
                     int toIndex = Random.Shared.Next(0, availableKeysCount);
                     if (index == toIndex)
                         goto SHUFFLE;
-                    await SwapKey(availableKeys.ElementAt(index), availableKeys.ElementAt(toIndex));
-                    //tasks.Add(SwapKey(availableKeys.ElementAt(index), availableKeys.ElementAt(toIndex)));
+                    KeyView fromKey = availableKeys[index];
+                    KeyView toKey = availableKeys[toIndex];
+                    //await fromKey.SwapAsync(toKey);
+                    fromKey.SwapPending(toKey);
+                    tasks.Add(fromKey.SwapAsync(toKey));
                 }
             }
 
@@ -206,13 +221,23 @@ public partial class TextTwistView : StackLayout
             {
                 await Task.WhenAll(tasks);
             }
-            isShuffling = false;
+
+            foreach(var key in _keys)
+            {
+                key.ClearPending();
+            }
+
+            _isShuffling = false;
         }
     }
 
+    bool isChecking = false;
     public async Task CheckEnteredWordAsync()
     {
-        if(GetEnteredWordView() is WordTilesView wordView)
+        if (isChecking) return;
+
+        isChecking = true;
+        if (GetEnteredWordView() is WordTilesView wordView)
         {
             _lastEnteredKeys = GetEnteredKeys().ToList();
             if (!wordView.IsCorrect)
@@ -225,24 +250,31 @@ public partial class TextTwistView : StackLayout
             // notif for already entered word
             //return;
         }
+
+        await Parallel.ForEachAsync(
+            source: GetEnteredKeys(),
+            body: async (key, Token) => await key.ShakeAsync());
+        isChecking = false;
     }
 
     public async Task DeleteEnteredKeyAsync()
     {
-        if(GetEnteredKeys()?.LastOrDefault() is Button key)
-            await ResetKeyAsync(key);
+        //if(GetEnteredKeys()?.LastOrDefault() is Button key)
+        //    await ResetKeyAsync(key);
+        if(GetEnteredKeys()?.LastOrDefault() is KeyView key)
+            await key.ResetAsync();
     }
 
     public async Task EnterLastEnteredKeysAsync()
     {
         if (_lastEnteredKeys == null || !_lastEnteredKeys.Any()) return;
 
-        List<Task> tasks = new List<Task>();
+        List<Task> tasks = new ();
         int count = 0;
-        foreach(Button key in _lastEnteredKeys)
-        {
-            tasks.Add(MoveToIndex(key, count++));
-        }
+        //await ClearAsync();
+        foreach (KeyView key in _lastEnteredKeys)
+            tasks.Add(MoveToIndex(key, count++, true));
+        
         await Task.WhenAll(tasks);
     }
 
@@ -255,86 +287,24 @@ public partial class TextTwistView : StackLayout
         return _wordsView.FirstOrDefault(word => word.Word == enteredWord);
     }
 
-    IEnumerable<Button> GetEnteredKeys() =>
-        _keys.Where(IsKeyEntered).OrderBy(key => key.ClassId);    
+    IEnumerable<KeyView> GetEnteredKeys() => _keys.Where(key => key.IsEntered()).OrderBy(key => key.ClassId);
 
-    bool IsKeyEntered(Button key)
+    async Task MoveToIndex(KeyView button, int? index = null, bool isForce = false)
     {
-        //return (key.ClassId ?? string.Empty).StartsWith("EK");
-        return !string.IsNullOrEmpty(key.ClassId);
-    }
-
-    async Task MoveToIndex(Button button, int? index = null)
-    {
-        // if entered
-        if (IsKeyEntered(button))
+        if (!isForce && button.IsEntered())
         {
-            //button.ClassId = button.ClassId.Remove(0, 1);
-            button.ClassId = string.Empty;
-            await MoveKeyAsync(button);
+            await button.ResetAsync();
         }
         // if key
         else
         {
-            int enteredKeysCount = index ?? _keys.Count(IsKeyEntered);
+            int enteredKeysCount = index ?? _keys.Count(key => key.IsEntered());
             View moveToView = (enteredKeyList[enteredKeysCount] as View)!;
-            //button.ClassId = "EK" + (enteredKeysCount);
             button.ClassId = "" + (enteredKeysCount);
             double offset = ((button.HeightRequest - moveToView.HeightRequest) / 2);
             double nextButtonX = moveToView.X - button.X - offset;
-            //double nextButtonY = enteredKeyList.Y - keyList.Y - offset;
             double nextButtonY = enteredKeyList.Y - button.Y - offset;
-            await MoveKeyAsync(button, nextButtonX, nextButtonY);
-        }
-    }
-
-    async Task MoveKeyAsync(Button key, double newX = 0, double newY = 0)
-    {
-        if (key.TranslationX != newX || key.TranslationY != newY)
-        {
-            await Task.WhenAll(
-                key.TranslateTo(
-                    x: newX,
-                    y: newY,
-                    length: _animationSpeed),
-                key.RotateTo(720, _animationSpeed)
-                );
-            key.TranslationX = newX;
-            key.TranslationY = newY;
-            key.Rotation = 0;
-        }
-    }
-
-    async Task SwapKey(Button fromKey, Button toKey)
-    {
-        if (!IsKeyEntered(fromKey) || !IsKeyEntered(toKey))
-        {
-            string fromKeyText = fromKey.Text;
-
-            double newFromKeyX = toKey.X - fromKey.X;
-            double newFromKeyY = toKey.Y - fromKey.Y;
-            double newToKeyX = fromKey.X - toKey.X;
-            double newToKeyY = fromKey.Y - toKey.Y;
-            await Task.WhenAll(
-                MoveKeyAsync(fromKey, newFromKeyX, newFromKeyY),
-                MoveKeyAsync(toKey, newToKeyX, newToKeyY));
-
-            fromKey.Text = toKey.Text;
-            toKey.Text = fromKeyText;
-
-            fromKey.TranslationX = 0;
-            fromKey.TranslationY = 0;
-            toKey.TranslationX = 0;
-            toKey.TranslationY = 0;
-        }
-    }
-
-    async Task ResetKeyAsync(Button key)
-    {
-        if (IsKeyEntered(key))
-        {
-            key.ClassId = key.ClassId?.Remove(0, 1);
-            await MoveKeyAsync(key);
+            await button.MoveKeyAsync(nextButtonX, nextButtonY);
         }
     }
     #endregion

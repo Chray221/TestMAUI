@@ -41,4 +41,11 @@
     <Color x:Key="Blue200Accent">#72ACF1</Color>
     <Color x:Key="Blue300Accent">#A7CBF6</Color>
 
+    <!-- FOR TEXT TWIST PAGE-->
+    <Color x:Key="MainTheme">#00E0FF</Color>
+    <Color x:Key="SecondTheme">#02FF86</Color>
+    <Color x:Key="TileBlue">#0055FF</Color>
+    <Color x:Key="EnteredKeyColor">#0066FF</Color>
+    <Color x:Key="EnteredKeyBorderColor">#FFFFFF</Color>
+
 </ResourceDictionary>

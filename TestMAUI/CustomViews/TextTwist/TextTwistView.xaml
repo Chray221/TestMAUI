@@ -10,12 +10,6 @@
              x:Name="textTwistView">
     <StackLayout.Resources>
         <ResourceDictionary>
-            <Color x:Key="MainTheme">#00E0FF</Color>
-            <Color x:Key="SecondTheme">#02FF86</Color>
-            <Color x:Key="TileBlue">#0055FF</Color>
-            <Color x:Key="EnteredKeyColor">#0066FF</Color>
-            <Color x:Key="EnteredKeyBorderColor">#FFFFFF</Color>
-
             <Style x:Key="KeyButton" TargetType="Button">
                 <Setter Property="FontSize" Value="25"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
