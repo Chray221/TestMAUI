@@ -1,19 +1,26 @@
-﻿using System;
+﻿//using System.ComponentModel.DataAnnotations.Schema;
 using SQLite;
 
 namespace TestMAUI.Data
 {
-	[Table("entities")]
+	[Table("entries")]
 	public class Dictionary
 	{
-        [Column("word")] public string Word { get;}
-        [Column("wordtype")] public string WordType { get;}
-        [Column("defination")] public string Defination { get; }
+        [Column("word"), NotNull, Collation("NOCASE")] public string Word { get; set; }
+        [Column("wordtype"), NotNull, Collation("NOCASE")] public string WordType { get; set; }
+        [Column("definition"), NotNull, Collation("NOCASE")] public string Definition { get; set; }
 
-		public Dictionary()
+        public Dictionary()
 		{
 
 		}
+
+        public Dictionary(string word, string wordType, string definition)
+        {
+            Word = word;
+            WordType = wordType;
+            Definition = definition;
+        }
     }
 }
 

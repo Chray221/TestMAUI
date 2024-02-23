@@ -3,11 +3,13 @@ namespace TestMAUI.Services.Interfaces
 {
 	public interface ITextTwistService
 	{
-        Task SetWords(List<string> words);
+        Task SetWordsAsync(List<string> words);
         void StartTimer();
         void PauseTimer();
         void StopTimer();
-        Task ClearAsync();
+        void ShowAllWords();
+        Task ResetGameAsync();
+        Task ClearKeysAsync();
         Task ShuffleKeys();
         Task CheckEnteredWordAsync();
         Task DeleteEnteredKeyAsync();

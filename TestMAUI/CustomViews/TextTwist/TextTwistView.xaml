@@ -91,24 +91,23 @@
         VerticalOptions="StartAndExpand"
         HorizontalOptions="FillAndExpand">
         <cv:MyFlexLayout
-        x:Name="wordList"
-        VerticalOptions="FillAndExpand"
-        HorizontalOptions="FillAndExpand"
-        InputTransparent="True"
-        CascadeInputTransparent="True"
-        Direction="Column"
-        HeightRequest="300"
-        MaxColumn="3"
-        RowSpacing="5"
-        ColumnSpacing="15"
-        MaxRow="9">
-        <cv:MyFlexLayout.ItemTemplate>
-            <DataTemplate>
-                <texttwist:WordTilesView Word="{Binding .}"/>
-            </DataTemplate>
-        </cv:MyFlexLayout.ItemTemplate>
-    </cv:MyFlexLayout>
-
+            x:Name="wordList"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            InputTransparent="True"
+            CascadeInputTransparent="True"
+            Direction="Column"
+            HeightRequest="300"
+            MaxColumn="3"
+            RowSpacing="5"
+            ColumnSpacing="15"
+            MaxRow="12">
+            <cv:MyFlexLayout.ItemTemplate>
+                <DataTemplate>
+                    <texttwist:WordTilesView Word="{Binding .}"/>
+                </DataTemplate>
+            </cv:MyFlexLayout.ItemTemplate>
+        </cv:MyFlexLayout>
     </Frame>
     <Grid x:Name="inputContainerView" ColumnDefinitions="*,*,*,*,*,*"
           RowDefinitions="auto,*,auto"

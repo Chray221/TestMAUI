@@ -2,8 +2,10 @@
 <view:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:view="clr-namespace:TestMAUI.Views"
+             xmlns:viewmodel="clr-namespace:TestMAUI.ViewModels"
              xmlns:texttwist="clr-namespace:TestMAUI.CustomViews.TextTwist"
              x:Class="TestMAUI.Views.TextTwistPage"
+             x:DataType="viewmodel:TextTwistViewModel"
              Title="TextTwistPage">
-    <texttwist:TextTwistView />
+    <texttwist:TextTwistView GameStatus="{Binding GameStatus}"/>
 </view:BaseContentPage>

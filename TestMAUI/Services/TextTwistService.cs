@@ -19,15 +19,18 @@ namespace TestMAUI.Services
             _view = view;
         }
 
-        public Task SetWords(List<string> words) => _view.SetWords(words);
+        public Task SetWordsAsync(List<string> words) => _view.SetWordsAsync(words);
         public void StartTimer() => _view.StartTimer();
         public void PauseTimer() => _view.PauseTimer();
         public void StopTimer() => _view.StopTimer();
-        public Task ClearAsync() => _view.ClearAsync();
+        public Task ClearKeysAsync() => _view.ClearKeysAsync();
         public Task ShuffleKeys() => _view.ShuffleKeys();
         public Task CheckEnteredWordAsync() => _view.CheckEnteredWordAsync();
         public Task DeleteEnteredKeyAsync() => _view.DeleteEnteredKeyAsync();
         public Task EnterLastEnteredKeysAsync() => _view.EnterLastEnteredKeysAsync();
+        public Task ResetGameAsync() => _view.ResetGameAsync();
+
+        public void ShowAllWords() => _view.ShowAllWords();
     }
 }
 

@@ -19,7 +19,7 @@ namespace TestMAUI.Helpers
         public const string DictionaryResourceName = "TestMAUI.Resources.Files.EnglishDictionary.db";
         public const string DictionaryDBName = "EnglishDictionary.db";
         public static string DictionaryDBPath =>
-            Path.Combine(FileSystem.AppDataDirectory, DatabaseFilename);
+            Path.Combine(FileSystem.AppDataDirectory, DictionaryDBName);
 
     }
 }

@@ -5,7 +5,7 @@ namespace TestMAUI.Repository.IRepository
 {
 	public interface IDictionaryRepository
 	{
-        Task<IEnumerable<Dictionary>> GetTextTwistWords();
+        Task<IEnumerable<Dictionary>> GetTextTwistWordsAsync();
     }
 }
 

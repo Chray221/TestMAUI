@@ -37,7 +37,6 @@
                                 Value="false"/>
                         </MultiTrigger.Conditions>
                         <Setter Property="BackgroundColor" Value="{StaticResource SecondTheme}"/>
-
                     </MultiTrigger>
                 </Frame.Triggers>
                 <Label
